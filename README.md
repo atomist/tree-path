@@ -1,4 +1,4 @@
-# @atomist/automation-client
+# @atomist/tree-path
 
 [![Build Status](https://travis-ci.org/atomist/tree-path-ts.svg?branch=master)](https://travis-ci.org/atomist/automation-client-ts)
 
