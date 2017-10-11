@@ -1,10 +1,10 @@
 import "mocha";
 
 import * as assert from "power-assert";
-import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier } from "../../../src/tree/path/axisSpecifiers";
-import { AllNodeTest, NamedNodeTest } from "../../../src/tree/path/nodeTests";
-import { parsePathExpression } from "../../../src/tree/path/pathExpressionParser";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../../src/tree/path/predicates";
+import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier } from "../../src/path/axisSpecifiers";
+import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
+import { parsePathExpression } from "../../src/path/pathExpressionParser";
+import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
 
 describe("pathExpressionParser", () => {
 

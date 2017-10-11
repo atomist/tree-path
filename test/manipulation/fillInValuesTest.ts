@@ -1,8 +1,8 @@
 import "mocha";
 
 import * as assert from "power-assert";
-import { fillInEmptyNonTerminalValues } from "../../../src/tree/manipulation/enrichment";
-import { TreeNode } from "../../../src/tree/TreeNode";
+import { fillInEmptyNonTerminalValues } from "../../src/manipulation/enrichment";
+import { TreeNode } from "../../src/TreeNode";
 
 describe("fill in values", () => {
 

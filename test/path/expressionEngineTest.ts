@@ -4,13 +4,13 @@ import * as assert from "power-assert";
 import {
     ChildAxisSpecifier, DescendantAxisSpecifier,
     DescendantOrSelfAxisSpecifier, SelfAxisSpecifier,
-} from "../../../src/tree/path/axisSpecifiers";
-import { evaluateExpression } from "../../../src/tree/path/expressionEngine";
-import { AllNodeTest, NamedNodeTest } from "../../../src/tree/path/nodeTests";
-import { LocationStep } from "../../../src/tree/path/pathExpression";
-import { parsePathExpression } from "../../../src/tree/path/pathExpressionParser";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../../src/tree/path/predicates";
-import { TreeNode } from "../../../src/tree/TreeNode";
+} from "../../src/path/axisSpecifiers";
+import { evaluateExpression } from "../../src/path/expressionEngine";
+import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
+import { LocationStep } from "../../src/path/pathExpression";
+import { parsePathExpression } from "../../src/path/pathExpressionParser";
+import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
+import { TreeNode } from "../../src/TreeNode";
 
 describe("expressionEngine", () => {
 
