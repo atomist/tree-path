@@ -1,6 +1,7 @@
 import * as _ from "lodash";
 
-import { isTerminal, TreeNode, TreeVisitor, visit } from "./TreeNode";
+import { isTerminal, TreeNode } from "../TreeNode";
+import { TreeVisitor, visit } from "../visitor";
 
 /**
  * Define properties allowing navigation down the tree.

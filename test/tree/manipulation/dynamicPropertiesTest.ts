@@ -1,8 +1,8 @@
 import "mocha";
 
 import * as assert from "power-assert";
-import { defineDynamicProperties } from "../../src/tree/enrichment";
-import { TreeNode } from "../../src/tree/TreeNode";
+import { defineDynamicProperties } from "../../../src/tree/manipulation/enrichment";
+import { TreeNode } from "../../../src/tree/TreeNode";
 
 describe("dynamic property enrichment", () => {
 

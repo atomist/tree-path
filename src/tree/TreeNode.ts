@@ -2,12 +2,17 @@
 /**
  * Core abstraction supporting path expressions.
  * Represents a tree node. Property and function names begin with $
- * to ensure they're out of band if we mix in user data
+ * to ensure they're out of band if we mix in user data.
+ * TreeNode instances may be parsed from text input, in which case
+ * they will have offsets within the input.
  */
 export interface TreeNode {
 
     readonly $name: string;
 
+    /**
+     * Children of the node if it's a non-terminal
+     */
     $children?: TreeNode[];
 
     /**
@@ -25,22 +30,4 @@ export interface TreeNode {
 
 export function isTerminal(tn: TreeNode): boolean {
     return tn.$value && !(tn.$children && tn.$children.length > 0);
-}
-
-/**
- * Visit the node, returning whether to continue
- * @param {TreeNode} n node to visit
- * @return {boolean} whether to visit the node's children, if any
- */
-export type TreeVisitor = (n: TreeNode) => boolean;
-
-/**
- * Visit the given TreeNode and its children
- * @param {TreeNode} tn
- * @param {TreeVisitor} v
- */
-export function visit(tn: TreeNode, v: TreeVisitor) {
-    if (v(tn)) {
-        (tn.$children || []).forEach(n => visit(n, v));
-    }
 }
