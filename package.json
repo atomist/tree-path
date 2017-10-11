@@ -14,7 +14,7 @@
     "automation"
   ],
   "bugs": {
-    "url": "https://github.com/atomist/automation-client-ts/issues"
+    "url": "https://github.com/atomist/tree-path-ts/issues"
   },
   "dependencies": {
     "@atomist/microgrammar": "^0.7.0"
