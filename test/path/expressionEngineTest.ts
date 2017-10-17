@@ -5,7 +5,7 @@ import {
     ChildAxisSpecifier, DescendantAxisSpecifier,
     DescendantOrSelfAxisSpecifier, SelfAxisSpecifier,
 } from "../../src/path/axisSpecifiers";
-import { evaluateExpression } from "../../src/path/expressionEngine";
+import { evaluateExpression, evaluateScalar, evaluateScalarValue } from "../../src/path/expressionEngine";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { LocationStep, PathExpression } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
@@ -190,6 +190,76 @@ describe("expressionEngine", () => {
         };
         const result = evaluateExpression(tn, pe);
         assert.deepEqual(result, []);
+    });
+
+    it("should evaluate scalar: 0", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='nothotdog']");
+        assert(result === undefined);
+    });
+
+    it("should evaluate scalarValue: 0", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalarValue(tn, "/*[@value='nothotdog']");
+        assert(result === undefined);
+    });
+
+    it("should evaluate scalar: > 1", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='x']");
+        assert(result === undefined);
+    });
+
+    it("should evaluate scalarValue: > 1", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalarValue(tn, "/*[@value='x']");
+        assert(result === undefined);
+    });
+
+    it("should evaluate scalar: 1", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='x']");
+        assert(result.$value === "x");
+    });
+
+    it("should evaluate scalarValue: 1", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1,
+            ],
+        };
+        const result = evaluateScalarValue(tn, "/*[@value='x']");
+        assert(result === "x");
     });
 
 });

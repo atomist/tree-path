@@ -36,3 +36,37 @@ export function evaluateExpression(root: TreeNode,
     }
     return currentResult;
 }
+
+/**
+ * Convenience method to return the result of evaluating the $value of the scalar expression,
+ * which is usually a terminal.
+ * Undefined if there is not exactly one.
+ *
+ * @param root  root node to evaluateExpression the path against
+ * @param pex   Parsed or string path expression.
+ * @return
+ */
+export function evaluateScalar(root: TreeNode,
+                               pex: string | PathExpression): TreeNode {
+    const results = evaluateExpression(root, pex);
+    if (isSuccessResult(results) && results.length === 1) {
+        return results[0];
+    } else {
+        return undefined;
+    }
+}
+
+/**
+ * Convenience method to return the result of evaluating the $value of the scalar expression,
+ * which is usually a terminal.
+ * Undefined if there is not exactly one.
+ *
+ * @param root  root node to evaluateExpression the path against
+ * @param pex   Parsed or string path expression.
+ * @return
+ */
+export function evaluateScalarValue(root: TreeNode,
+                                    pex: string | PathExpression): string | undefined {
+    const node = evaluateScalar(root, pex);
+    return node ? node.$value : undefined;
+}
