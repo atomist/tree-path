@@ -5,9 +5,14 @@ import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
 import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier, SelfAxisSpecifier } from "./axisSpecifiers";
 import { AllNodeTest, NamedNodeTest } from "./nodeTests";
-import { LocationStep, PathExpression, Predicate, stringify } from "./pathExpression";
+import { LocationStep, PathExpression, Predicate } from "./pathExpression";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "./predicates";
 
+export function toPathExpression(pathExpression: string | PathExpression): PathExpression {
+    return (typeof pathExpression === "string") ?
+        parsePathExpression(pathExpression) :
+        pathExpression;
+}
 /**
  * Parse the given string to path expression. Throw an error in the event of failure.
  * @param {string} expr expression ot path

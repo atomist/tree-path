@@ -7,7 +7,7 @@ import {
 } from "../../src/path/axisSpecifiers";
 import { evaluateExpression } from "../../src/path/expressionEngine";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
-import { LocationStep } from "../../src/path/pathExpression";
+import { LocationStep, PathExpression } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
 import { TreeNode } from "../../src/TreeNode";
@@ -32,14 +32,22 @@ describe("expressionEngine", () => {
         assert.deepEqual(result, [tn]);
     });
 
-    it("should return self passing test", () => {
-        const tn = {$name: "Thing1"};
+    it("should return self passing test from parsed expression", () => {
         const pe = {
             locationSteps: [new LocationStep(SelfAxisSpecifier, AllNodeTest, [ { evaluate: () => true } ])],
         };
+        returnSelf(pe);
+    });
+
+    it("should return self passing test from string", () => {
+        returnSelf(".*");
+    });
+
+    function returnSelf(pe: string | PathExpression) {
+        const tn = {$name: "Thing1"};
         const result = evaluateExpression(tn, pe);
         assert.deepEqual(result, [tn]);
-    });
+    }
 
     it("should not return self failing test", () => {
         const tn = {$name: "Thing1"};
