@@ -2,12 +2,12 @@ import { Concat } from "@atomist/microgrammar/matchers/Concat";
 import { Microgrammar } from "@atomist/microgrammar/Microgrammar";
 import { firstOf, optional } from "@atomist/microgrammar/Ops";
 import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
+import { Integer } from "@atomist/microgrammar/Primitives";
 import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier, SelfAxisSpecifier } from "./axisSpecifiers";
 import { AllNodeTest, NamedNodeTest } from "./nodeTests";
 import { LocationStep, PathExpression, Predicate } from "./pathExpression";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate, PositionPredicate } from "./predicates";
-import { Integer } from "@atomist/microgrammar/Primitives";
 
 /**
  * Parse the given string to path expression. Throw an error in the event of failure.
@@ -51,7 +51,7 @@ const PredicateGrammarDefs = {
             return new AttributeEqualityPredicate(ctx._term.name, ctx._term.value);
         } else if (!!ctx._term.position) {
             return new PositionPredicate(ctx._term.position);
-        } if (!!ctx._term.locationSteps) {
+        } else if (!!ctx._term.locationSteps) {
             return new NestedPathExpressionPredicate(ctx._term as PathExpression);
         }
         throw new Error(`Unsupported predicate: ${JSON.stringify(ctx._term)}`);

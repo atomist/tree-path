@@ -44,7 +44,7 @@
     "distclean": "npm run clean ; rm -rf node_modules",
     "fmt": "tsfmt --replace",
     "lint": "tslint --format verbose --project . --exclude '{build,node_modules}/**' '**/*.ts'",
-    "lint-fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "test": "mocha --compilers ts:espower-typescript/guess 'test/**/!(*atomist.config).ts'",
     "testone": "mocha --compilers ts:espower-typescript/guess \"test/**/${TEST:-*.ts}\"",
     "typedoc": "typedoc --mode modules --excludeExternals"

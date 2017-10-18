@@ -6,7 +6,7 @@ import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import {
     AttributeEqualityPredicate, NestedPathExpressionPredicate,
-    PositionPredicate
+    PositionPredicate,
 } from "../../src/path/predicates";
 
 describe("pathExpressionParser", () => {

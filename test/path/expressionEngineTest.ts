@@ -262,4 +262,16 @@ describe("expressionEngine", () => {
         assert(result === "x");
     });
 
+    it("should evaluate scalar >1 with position", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='x'][1]");
+        assert(result === thing1);
+    });
+
 });
