@@ -16,6 +16,22 @@ export class AttributeEqualityPredicate implements Predicate {
     }
 }
 
+/**
+ * Position within results. Indexing starts from 1
+ */
+export class PositionPredicate implements Predicate {
+
+    constructor(public readonly index: number) {}
+
+    public evaluate(nodeToTest: TreeNode, returnedNodes: TreeNode[]): boolean {
+        return returnedNodes.indexOf(nodeToTest) === this.index - 1;
+    }
+
+    public toString() {
+        return `[${this.index}]'`;
+    }
+}
+
 export class NestedPathExpressionPredicate implements Predicate {
 
     constructor(public pathExpression: PathExpression) {}

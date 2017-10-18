@@ -6,13 +6,9 @@ import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier, SelfAxisSpecifier } from "./axisSpecifiers";
 import { AllNodeTest, NamedNodeTest } from "./nodeTests";
 import { LocationStep, PathExpression, Predicate } from "./pathExpression";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "./predicates";
+import { AttributeEqualityPredicate, NestedPathExpressionPredicate, PositionPredicate } from "./predicates";
+import { Integer } from "@atomist/microgrammar/Primitives";
 
-export function toPathExpression(pathExpression: string | PathExpression): PathExpression {
-    return (typeof pathExpression === "string") ?
-        parsePathExpression(pathExpression) :
-        pathExpression;
-}
 /**
  * Parse the given string to path expression. Throw an error in the event of failure.
  * @param {string} expr expression ot path
@@ -23,7 +19,7 @@ export function parsePathExpression(expr: string): PathExpression {
     // TODO the _initialized property is being added to microgrammar LazyMatcher
     // to avoid the need for adding a property here
     if (!pg._initialized) {
-        pg._term = firstOf(ValuePredicateGrammar, PathExpressionGrammar);
+        pg._term = firstOf(ValuePredicateGrammar, PositionPredicateGrammar, PathExpressionGrammar);
         pg._initialized = true;
         PredicateGrammar._init();
     }
@@ -44,13 +40,18 @@ const NodeName = /[.a-zA-Z0-9_\-$#]+/;
 const ValuePredicateGrammar = Microgrammar.fromString<Predicate>(
     "@${name}='${value}'");
 
+const PositionPredicateGrammar = Microgrammar.fromString<Predicate>(
+    "${position}", { position: Integer });
+
 const PredicateGrammarDefs = {
     _lb: "[",
     _term: null, // Will be set later to avoid circularity
     term: ctx => {
         if (!!ctx._term.name && !!ctx._term.value) {
             return new AttributeEqualityPredicate(ctx._term.name, ctx._term.value);
-        } else if (!!ctx._term.locationSteps) {
+        } else if (!!ctx._term.position) {
+            return new PositionPredicate(ctx._term.position);
+        } if (!!ctx._term.locationSteps) {
             return new NestedPathExpressionPredicate(ctx._term as PathExpression);
         }
         throw new Error(`Unsupported predicate: ${JSON.stringify(ctx._term)}`);

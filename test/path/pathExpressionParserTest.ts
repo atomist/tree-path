@@ -4,7 +4,10 @@ import * as assert from "power-assert";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier } from "../../src/path/axisSpecifiers";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
+import {
+    AttributeEqualityPredicate, NestedPathExpressionPredicate,
+    PositionPredicate
+} from "../../src/path/predicates";
 
 describe("pathExpressionParser", () => {
 
@@ -40,6 +43,18 @@ describe("pathExpressionParser", () => {
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
         assert(nnt.name === "foo");
+    });
+
+    it("should parse children at position", () => {
+        const expr = "/foo[3]";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
+        const nnt = parsed.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
+        assert(parsed.locationSteps[0].predicates.length === 1);
+        const pp = parsed.locationSteps[0].predicates[0] as PositionPredicate;
+        assert(pp.index === 3);
     });
 
     it("should parse named descendants", () => {

@@ -2,7 +2,7 @@ import { TreeNode } from "../TreeNode";
 import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpression";
 
 import * as _ from "lodash";
-import { toPathExpression } from "./pathExpressionParser";
+import { toPathExpression } from "./utils";
 
 export type ExpressionEngine = (node: TreeNode, parsed: PathExpression | string) => ExecutionResult;
 
