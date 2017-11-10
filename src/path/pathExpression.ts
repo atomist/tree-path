@@ -60,10 +60,12 @@ export interface Predicate {
      * @param returnedNodes all nodes returned. This argument is
      *                      often ignored, but can be used to discern the index of the target node.
      * @param ee expression engine to evaluateExpression
+     * @param functionRegistry registry to use to look up functions
      */
     evaluate(nodeToTest: TreeNode,
              returnedNodes: TreeNode[],
-             ee: ExpressionEngine): boolean;
+             ee: ExpressionEngine,
+             functionRegistry: object): boolean;
 }
 
 /**
@@ -76,11 +78,11 @@ export class LocationStep {
                 public predicates: Predicate[]) {
     }
 
-    public follow(tn: TreeNode, root: TreeNode, ee: ExpressionEngine): ExecutionResult {
+    public follow(tn: TreeNode, root: TreeNode, ee: ExpressionEngine, functionRegistry: object = {}): ExecutionResult {
         const allNodes = this.axis.follow(tn, root)
             .filter(n => this.test.test(n, ee));
         return allNodes.filter(n =>
-            !this.predicates.some(pred => !pred.evaluate(n, allNodes, ee)));
+            !this.predicates.some(pred => !pred.evaluate(n, allNodes, ee, functionRegistry)));
     }
 
     public toString() {

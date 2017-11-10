@@ -10,7 +10,7 @@ import {
     evaluateScalarValues,
 } from "../../src/path/expressionEngine";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
-import { LocationStep, PathExpression } from "../../src/path/pathExpression";
+import { FailureResult, LocationStep, PathExpression, SuccessResult } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
 import { TreeNode } from "../../src/TreeNode";
@@ -37,7 +37,7 @@ describe("expressionEngine", () => {
 
     it("should return self passing test from parsed expression", () => {
         const pe = {
-            locationSteps: [new LocationStep(SelfAxisSpecifier, AllNodeTest, [ { evaluate: () => true } ])],
+            locationSteps: [new LocationStep(SelfAxisSpecifier, AllNodeTest, [{evaluate: () => true}])],
         };
         returnSelf(pe);
     });
@@ -55,7 +55,7 @@ describe("expressionEngine", () => {
     it("should not return self failing test", () => {
         const tn = {$name: "Thing1"};
         const pe = {
-            locationSteps: [new LocationStep(SelfAxisSpecifier, AllNodeTest, [ { evaluate: () => false } ])],
+            locationSteps: [new LocationStep(SelfAxisSpecifier, AllNodeTest, [{evaluate: () => false}])],
         };
         const result = evaluateExpression(tn, pe);
         assert.deepEqual(result, []);
@@ -299,6 +299,61 @@ describe("expressionEngine", () => {
         };
         const result = evaluateScalar(tn, "/*[@value='x'][1]");
         assert(result === thing1);
+    });
+
+    it("should handle false function predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateExpression(tn, "/*[@value='x'][?veto]", {
+            veto: () => false,
+        }) as SuccessResult;
+        assert(result.length === 0);
+    });
+
+    it("should handle true function predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateExpression(tn, "/*[@value='x'][?veto]", {
+            veto: () => true,
+        }) as SuccessResult;
+        assert(result.length === 2);
+    });
+
+    it("should handle computing function predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateExpression(tn, "/*[@value='x'][?veto]", {
+            veto: n => n.$name === "Thing1",
+        }) as SuccessResult;
+        assert.deepEqual(result, [ thing1 ]);
+    });
+
+    it("should handle missing function predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateExpression(tn, "/*[@value='x'][?veto]") as FailureResult;
+        assert(typeof result === "string");
+        assert(result.includes("veto"));
     });
 
 });
