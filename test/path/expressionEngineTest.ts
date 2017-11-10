@@ -5,7 +5,10 @@ import {
     ChildAxisSpecifier, DescendantAxisSpecifier,
     DescendantOrSelfAxisSpecifier, SelfAxisSpecifier,
 } from "../../src/path/axisSpecifiers";
-import { evaluateExpression, evaluateScalar, evaluateScalarValue } from "../../src/path/expressionEngine";
+import {
+    evaluateExpression, evaluateScalar, evaluateScalarValue,
+    evaluateScalarValues,
+} from "../../src/path/expressionEngine";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { LocationStep, PathExpression } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
@@ -216,6 +219,18 @@ describe("expressionEngine", () => {
         assert(result === undefined);
     });
 
+    it("should evaluate scalarValues: 0", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalarValues(tn, "/*[@value='nothotdog']");
+        assert.deepEqual(result, []);
+    });
+
     it("should evaluate scalar: > 1", () => {
         const thing1 = {$name: "Thing1", $value: "x"};
         const thing2 = {$name: "Thing2", $value: "x"};
@@ -238,6 +253,18 @@ describe("expressionEngine", () => {
         };
         const result = evaluateScalarValue(tn, "/*[@value='x']");
         assert(result === undefined);
+    });
+
+    it("should evaluate scalarValues: > 1", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalarValues(tn, "/*[@value='x']");
+        assert.deepEqual(result, ["x", "x"]);
     });
 
     it("should evaluate scalar: 1", () => {

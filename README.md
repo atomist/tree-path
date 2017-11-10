@@ -5,6 +5,11 @@
 [Node][node] module [`@atomist/tree-path-ts`] defining trees and path expressions.  
 Primarily intended for use in Atomist client automations.
 
+XPath-like path expressions can be executed against any implementation of the simple `TreeNode` interface.
+This is typically used to expose ASTS: for example, those resulting from ANTLR grammars,
+ [microgrammars](https://github.com/atomist/microgrammar) or a
+standalone parser such as the TypeScript compiler's parser.
+
 [node]: https://nodejs.org/ (Node.js)
 [automation-client]: https://www.npmjs.com/package/@atomist/tree-path-ts
 

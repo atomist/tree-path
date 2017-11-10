@@ -24,7 +24,7 @@ export function evaluateExpression(root: TreeNode,
                 const allNextNodes =
                     currentResult.map(n => locationStep.follow(n, root, evaluateExpression));
                 const next = _.flatten(allNextNodes);
-                console.log("Executing location step %s against [%s]:count=%d",
+                console.debug("Executing location step %s against [%s]:count=%d",
                     locationStep,
                     currentResult.map(n => n.$name).join(","),
                     next.length);
@@ -69,4 +69,21 @@ export function evaluateScalarValue(root: TreeNode,
                                     pex: string | PathExpression): string | undefined {
     const node = evaluateScalar(root, pex);
     return node ? node.$value : undefined;
+}
+
+/**
+ * Convenience method to return an array of literal $value's
+ * of the nodes returned by the expression, which usually matches terminals.
+ * Returns the empty array without error if there are 0.
+ *
+ * @param root  root node to evaluateExpression the path against
+ * @param pex   Parsed or string path expression.
+ * @return
+ */
+export function evaluateScalarValues(root: TreeNode,
+                                     pex: string | PathExpression): string[] {
+    const values = (evaluateExpression(root, pex));
+    return isSuccessResult(values) ?
+        values.map(n => n.$value) :
+        [];
 }
