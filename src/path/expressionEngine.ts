@@ -4,7 +4,9 @@ import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpressi
 import * as _ from "lodash";
 import { toPathExpression } from "./utils";
 
-export type ExpressionEngine = (node: TreeNode, parsed: PathExpression | string) => ExecutionResult;
+export type ExpressionEngine = (node: TreeNode,
+                                parsed: PathExpression | string,
+                                functionRegistry: object) => ExecutionResult;
 
 /**
  * Return the result of evaluating the expression. If the expression is invalid
@@ -12,17 +14,18 @@ export type ExpressionEngine = (node: TreeNode, parsed: PathExpression | string)
  *
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
+ * @param functionRegistry registry to use to look up functions
  * @return
  */
 export function evaluateExpression(root: TreeNode,
-                                   pex: string | PathExpression): ExecutionResult {
+                                   pex: string | PathExpression, functionRegistry: object = {}): ExecutionResult {
     const parsed = toPathExpression(pex);
     let currentResult: ExecutionResult = [root];
     for (const locationStep of parsed.locationSteps) {
         if (isSuccessResult(currentResult)) {
             if (currentResult.length > 0) {
                 const allNextNodes =
-                    currentResult.map(n => locationStep.follow(n, root, evaluateExpression));
+                    currentResult.map(n => locationStep.follow(n, root, evaluateExpression, functionRegistry));
                 const next = _.flatten(allNextNodes);
                 console.debug("Executing location step %s against [%s]:count=%d",
                     locationStep,
@@ -44,11 +47,13 @@ export function evaluateExpression(root: TreeNode,
  *
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
+ * @param functionRegistry registry to use to look up functions
  * @return
  */
 export function evaluateScalar(root: TreeNode,
-                               pex: string | PathExpression): TreeNode {
-    const results = evaluateExpression(root, pex);
+                               pex: string | PathExpression,
+                               functionRegistry: object = {}): TreeNode {
+    const results = evaluateExpression(root, pex, functionRegistry);
     if (isSuccessResult(results) && results.length === 1) {
         return results[0];
     } else {
@@ -63,11 +68,13 @@ export function evaluateScalar(root: TreeNode,
  *
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
+ * @param functionRegistry registry to use to look up functions
  * @return
  */
 export function evaluateScalarValue(root: TreeNode,
-                                    pex: string | PathExpression): string | undefined {
-    const node = evaluateScalar(root, pex);
+                                    pex: string | PathExpression,
+                                    functionRegistry: object = {}): string | undefined {
+    const node = evaluateScalar(root, pex, functionRegistry);
     return node ? node.$value : undefined;
 }
 
@@ -78,11 +85,13 @@ export function evaluateScalarValue(root: TreeNode,
  *
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
+ * @param functionRegistry registry to use to look up functions
  * @return
  */
 export function evaluateScalarValues(root: TreeNode,
-                                     pex: string | PathExpression): string[] {
-    const values = (evaluateExpression(root, pex));
+                                     pex: string | PathExpression,
+                                     functionRegistry: object = {}): string[] {
+    const values = (evaluateExpression(root, pex, functionRegistry));
     return isSuccessResult(values) ?
         values.map(n => n.$value) :
         [];

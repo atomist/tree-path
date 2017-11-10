@@ -2,6 +2,7 @@ import "mocha";
 
 import * as assert from "power-assert";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier } from "../../src/path/axisSpecifiers";
+import { FunctionPredicate } from "../../src/path/FunctionPredicate";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import {
@@ -147,5 +148,17 @@ describe("pathExpressionParser", () => {
     });
 
     it("should AND predicates");
+
+    it("should parse function attribute", () => {
+        const expr = "/foo[?smeg]";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
+        const nnt = parsed.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
+        assert(parsed.locationSteps[0].predicates.length === 1);
+        const pred = parsed.locationSteps[0].predicates[0] as FunctionPredicate;
+        assert(pred.name === "smeg");
+    });
 
 });

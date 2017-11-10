@@ -5,6 +5,7 @@ import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
 import { Integer } from "@atomist/microgrammar/Primitives";
 import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier, SelfAxisSpecifier } from "./axisSpecifiers";
+import { FunctionPredicate } from "./FunctionPredicate";
 import { AllNodeTest, NamedNodeTest } from "./nodeTests";
 import { LocationStep, PathExpression, Predicate } from "./pathExpression";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate, PositionPredicate } from "./predicates";
@@ -19,17 +20,19 @@ export function parsePathExpression(expr: string): PathExpression {
     // TODO the _initialized property is being added to microgrammar LazyMatcher
     // to avoid the need for adding a property here
     if (!pg._initialized) {
-        pg._term = firstOf(ValuePredicateGrammar, PositionPredicateGrammar, PathExpressionGrammar);
+        pg._term = firstOf(
+            ValuePredicateGrammar, PositionPredicateGrammar,
+            PathExpressionGrammar, FunctionPredicateGrammar);
         pg._initialized = true;
         PredicateGrammar._init();
     }
 
     const m = PathExpressionGrammar.exactMatch(expr);
     if (isPatternMatch(m)) {
-       // logger.debug("Successfully parsed path expression [%s]: %s", expr, stringify(m));
+        // logger.debug("Successfully parsed path expression [%s]: %s", expr, stringify(m));
         return m;
     } else {
-       // logger.info("Error parsing path expression [%s]: %s", expr, JSON.stringify(m));
+        // logger.info("Error parsing path expression [%s]: %s", expr, JSON.stringify(m));
         throw new Error("Failure: " + JSON.stringify(m));
     }
 }
@@ -40,8 +43,13 @@ const NodeName = /[.a-zA-Z0-9_\-$#]+/;
 const ValuePredicateGrammar = Microgrammar.fromString<Predicate>(
     "@${name}='${value}'");
 
+const FunctionPredicateGrammar = Microgrammar.fromString<Predicate>(
+    "?${functionName}", {
+        functionName: /[a-zA-Z_][a-zA-Z0-9_]*/,
+    });
+
 const PositionPredicateGrammar = Microgrammar.fromString<Predicate>(
-    "${position}", { position: Integer });
+    "${position}", {position: Integer});
 
 const PredicateGrammarDefs = {
     _lb: "[",
@@ -53,6 +61,8 @@ const PredicateGrammarDefs = {
             return new PositionPredicate(ctx._term.position);
         } else if (!!ctx._term.locationSteps) {
             return new NestedPathExpressionPredicate(ctx._term as PathExpression);
+        } else if (!!ctx._term.functionName) {
+            return new FunctionPredicate(ctx._term.functionName as string);
         }
         throw new Error(`Unsupported predicate: ${JSON.stringify(ctx._term)}`);
     },
