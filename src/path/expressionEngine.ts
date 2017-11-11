@@ -2,7 +2,8 @@ import { TreeNode } from "../TreeNode";
 import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpression";
 
 import * as _ from "lodash";
-import { toPathExpression } from "./utils";
+import { FunctionPredicate, isFunctionPredicate } from "./FunctionPredicate";
+import { allPredicates, toPathExpression } from "./utils";
 
 export type ExpressionEngine = (node: TreeNode,
                                 parsed: PathExpression | string,
@@ -11,6 +12,7 @@ export type ExpressionEngine = (node: TreeNode,
 /**
  * Return the result of evaluating the expression. If the expression is invalid
  * return a message, otherwise the result of invoking the valid expression.
+ * All other functions ultimately run through this.
  *
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
@@ -20,6 +22,19 @@ export type ExpressionEngine = (node: TreeNode,
 export function evaluateExpression(root: TreeNode,
                                    pex: string | PathExpression, functionRegistry: object = {}): ExecutionResult {
     const parsed = toPathExpression(pex);
+
+    // Validate function predicates
+    const functionPredicates: FunctionPredicate[] = allPredicates(parsed)
+        .filter(f => isFunctionPredicate(f))
+        .map(f => f as FunctionPredicate);
+
+    const missingFunctions = functionPredicates
+        .filter(fp => !functionRegistry[fp.name])
+        .map(fp => fp.name);
+    if (missingFunctions.length > 0) {
+        return `Function predicate '${missingFunctions.join()}' not found in registry`;
+    }
+
     let currentResult: ExecutionResult = [root];
     for (const locationStep of parsed.locationSteps) {
         if (isSuccessResult(currentResult)) {

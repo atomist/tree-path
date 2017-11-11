@@ -47,6 +47,14 @@ export interface NodeTest {
 }
 
 /**
+ * Signature of a predicate test.
+ */
+export type PredicateTest = (nodeToTest: TreeNode,
+                             returnedNodes: TreeNode[],
+                             ee: ExpressionEngine,
+                             functionRegistry: object) => boolean;
+
+/**
  * Based on the XPath concept of a predicate. A predicate acts on a sequence of nodes
  * returned from navigation to filter them.
  */
@@ -62,10 +70,7 @@ export interface Predicate {
      * @param ee expression engine to evaluateExpression
      * @param functionRegistry registry to use to look up functions
      */
-    evaluate(nodeToTest: TreeNode,
-             returnedNodes: TreeNode[],
-             ee: ExpressionEngine,
-             functionRegistry: object): boolean;
+    evaluate: PredicateTest;
 }
 
 /**

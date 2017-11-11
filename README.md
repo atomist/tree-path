@@ -1,14 +1,23 @@
 # @atomist/tree-path
 
-[![Build Status](https://travis-ci.org/atomist/tree-path-ts.svg?branch=master)](https://travis-ci.org/atomist/automation-client-ts)
+[![Build Status](https://travis-ci.org/atomist/tree-path-ts.svg?branch=master)](https://travis-ci.org/atomist/tree-path-ts)
 
 [Node][node] module [`@atomist/tree-path-ts`] defining trees and path expressions.  
-Primarily intended for use in Atomist client automations.
+Primarily intended for use in Atomist client automations, for consistent execution against any AST.
 
 XPath-like path expressions can be executed against any implementation of the simple `TreeNode` interface.
 This is typically used to expose ASTS: for example, those resulting from ANTLR grammars,
  [microgrammars](https://github.com/atomist/microgrammar) or a
-standalone parser such as the TypeScript compiler's parser.
+standalone parser such as the TypeScript compiler's parser. The ability to skip levels in navigating path expressions (e.g. via `//`) is invaluable in ignoring irrelevant levels of language ASTs, which tend to be noisy.
+
+For example, find all variable names in a TypeScript file (using TypeScript AST integration in [automation-client](https://github.com/atomist/automation-client-ts):
+
+```typescript
+const variableNames = evaluateScalarValue(
+	sourceFile, 
+	"//VariableDeclaration/Identifier");
+```
+
 
 [node]: https://nodejs.org/ (Node.js)
 [automation-client]: https://www.npmjs.com/package/@atomist/tree-path-ts

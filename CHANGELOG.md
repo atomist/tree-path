@@ -7,35 +7,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/automation-client-ts/compare/0.1.37...HEAD
+[Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.13...HEAD
 
 ### Changed
 
--   Updated @atomist/microgrammar to 0.7.0
 
 ### Added
 
--   Publish master and PR builds as pre-release versions to Atomist
-    NPM registry
 
-## [0.1.37][] - 2017-10-02
+## [0.1.3][] - 2017-11-10
 
-File Release
+Function release
 
-[0.1.37]: https://github.com/atomist/automation-client-ts/compare/0.1.36...0.1.37
+[0.1.3]: https://github.com/atomist/tree-path-ts/tree/0.1.3
 
 ### Added
 
--   File replace and replaceAll
-
-## [0.1.0][] - 2017-09-19
-
-Initial Release
-
-[0.1.0]: https://github.com/atomist/automation-client-ts/tree/0.1.0
-
-### Added
-
--   Totally revamped command and event handler model
--   Added new `@Ingestor` automation type
--   Switched to GraphQL for querying data
+-   Added `addScalaValues` convenience function
+-   Support for arbitrary function predicates, passed in via additional optional argument to `evaluate` methods
