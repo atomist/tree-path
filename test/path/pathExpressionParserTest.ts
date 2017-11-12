@@ -7,6 +7,7 @@ import {
 } from "../../src/path/axisSpecifiers";
 import { FunctionPredicate } from "../../src/path/FunctionPredicate";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
+import { SimplePathExpression, UnionPathExpression } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import {
     AttributeEqualityPredicate, NestedPathExpressionPredicate,
@@ -17,7 +18,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse self", () => {
         const expr = ".";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis ===  SelfAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
@@ -25,7 +26,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse parent", () => {
         const expr = "..";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis ===  ParentAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
@@ -33,7 +34,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse all children", () => {
         const expr = "/*";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis ===  ChildAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
@@ -41,7 +42,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse all descendants", () => {
         const expr = "//*";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === DescendantOrSelfAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest);
@@ -49,7 +50,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse all descendants with name", () => {
         const expr = "//thing";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === DescendantOrSelfAxisSpecifier);
         const nt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -58,7 +59,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse named children", () => {
         const expr = "/foo";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -67,7 +68,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse named children with full syntax", () => {
         const expr = "child::foo";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -76,7 +77,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse children at position", () => {
         const expr = "/foo[3]";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -88,7 +89,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse named descendants", () => {
         const expr = "//foo";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === DescendantOrSelfAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -98,7 +99,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse named child then named descendants", () => {
         const expr = "/fizz//foo";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 2);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt1 = parsed.locationSteps[0].test as NamedNodeTest;
@@ -110,7 +111,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse named children with attribute", () => {
         const expr = "/foo[@value='bar']";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -122,7 +123,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse children with custom attribute", () => {
         const expr = "/foo[@smeg='smog']";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -135,7 +136,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse nested path expression predicate", () => {
         const expr = "/foo[/bar/baz]";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -147,7 +148,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse multiple nested path expression predicates", () => {
         const expr = "/foo[/bar/baz][/dog/cat]";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -161,7 +162,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse nested nested path expression", () => {
         const expr = "/foo[/bar/baz[/dog/cat]]";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -169,9 +170,10 @@ describe("pathExpressionParser", () => {
         assert(parsed.locationSteps[0].predicates.length === 1);
         const pred1 = parsed.locationSteps[0].predicates[0] as NestedPathExpressionPredicate;
         assert(!!pred1.pathExpression);
-        assert(pred1.pathExpression.locationSteps.length === 2);
-        assert(pred1.pathExpression.locationSteps[1].predicates.length === 1);
-        const pred2 = pred1.pathExpression.locationSteps[1].predicates[0] as NestedPathExpressionPredicate;
+        const npe = pred1.pathExpression as SimplePathExpression;
+        assert(npe.locationSteps.length === 2);
+        assert(npe.locationSteps[1].predicates.length === 1);
+        const pred2 = npe.locationSteps[1].predicates[0] as NestedPathExpressionPredicate;
         assert(!!pred2.pathExpression);
     });
 
@@ -179,7 +181,7 @@ describe("pathExpressionParser", () => {
 
     it("should parse function attribute", () => {
         const expr = "/foo[?smeg]";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
@@ -191,11 +193,29 @@ describe("pathExpressionParser", () => {
 
     it("should parse following sibling", () => {
         const expr = "following-sibling::foo";
-        const parsed = parsePathExpression(expr);
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === FollowingSiblingAxisSpecifier);
         const nnt = parsed.locationSteps[0].test as NamedNodeTest;
         assert(nnt.name === "foo");
+    });
+
+    it("should parse union path expression", () => {
+        const expr = "/foo[@smeg='smog'] | //dog";
+        const u = parsePathExpression(expr) as UnionPathExpression;
+        assert(u.unions.length === 2);
+        const first = u.unions[0] as SimplePathExpression;
+        assert(first.locationSteps.length === 1);
+        assert(first.locationSteps[0].axis === ChildAxisSpecifier);
+        const nnt = first.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
+        assert(first.locationSteps[0].predicates.length === 1);
+        const pred = first.locationSteps[0].predicates[0] as AttributeEqualityPredicate;
+        assert(pred.name === "smeg");
+        assert(pred.value === "smog");
+        const second = u.unions[1] as SimplePathExpression;
+        assert(second.locationSteps.length === 1);
+        assert(second.locationSteps[0].axis === DescendantOrSelfAxisSpecifier);
     });
 
 });
