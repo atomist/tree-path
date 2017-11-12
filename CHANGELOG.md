@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- `ancestor` and `ancestor-or-self` axis specifiers
+
 ## [0.1.4][] - 2017-12-10
 
 Following sibling release

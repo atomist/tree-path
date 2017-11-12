@@ -380,4 +380,28 @@ describe("expressionEngine", () => {
         assert(result === thing1);
     });
 
+    it("should evaluate ancestor", () => {
+        const grandkid = {$name: "Thing1", $value: "x"};
+        const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
+        const root: TreeNode = {
+            $name: "foo", $children: [
+                kid,
+            ],
+        };
+        const result = evaluateExpression(root, "//Thing1/ancestor::*");
+        assert.deepEqual(result, [ root, kid ]);
+    });
+
+    it("should evaluate ancestor-or-self", () => {
+        const grandkid = {$name: "Thing1", $value: "x"};
+        const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
+        const root: TreeNode = {
+            $name: "foo", $children: [
+                kid,
+            ],
+        };
+        const result = evaluateExpression(root, "//Thing1/ancestor-or-self::*");
+        assert.deepEqual(result, [ root, kid, grandkid ]);
+    });
+
 });

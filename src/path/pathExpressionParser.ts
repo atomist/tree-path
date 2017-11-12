@@ -5,6 +5,7 @@ import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
 import { Integer } from "@atomist/microgrammar/Primitives";
 import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import {
+    AncestorAxisSpecifier, AncestorOrSelfAxisSpecifier,
     ChildAxisSpecifier, DescendantAxisSpecifier, DescendantOrSelfAxisSpecifier, FollowingSiblingAxisSpecifier,
     PrecedingSiblingAxisSpecifier,
     SelfAxisSpecifier,
@@ -96,6 +97,10 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                 if (ctx._axis.endsWith("::")) {
                     const specifier = ctx._axis.substr(0, ctx._axis.length - 2);
                     switch (specifier) {
+                        case AncestorAxisSpecifier.type:
+                            return AncestorAxisSpecifier;
+                        case AncestorOrSelfAxisSpecifier.type:
+                            return AncestorOrSelfAxisSpecifier;
                         case ChildAxisSpecifier.type :
                             return ChildAxisSpecifier;
                         case DescendantAxisSpecifier.type :

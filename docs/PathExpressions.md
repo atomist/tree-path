@@ -16,6 +16,8 @@ We only support the more familiar "abbreviated syntax" offered by XPath.
 ### Supported Axes
 The following axes are supported:
 
+- ancestor
+- ancestor-or-self
 - self: `.`
 - child: `/`
 - descendant or self: `//`
@@ -24,8 +26,6 @@ The following axes are supported:
 
 The folowing axes are not currently supported. Those in ~~strike through~~ are not relevant and will never be supported. The others may be if there is demand for them:
 
-- ancestor
-- ancestor-or-self
 - ~~attribute~~	
 - descendant
 - following

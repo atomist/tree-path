@@ -1,6 +1,6 @@
 import * as _ from "lodash";
 
-import { parentOf } from "../internal/treeUtils";
+import { parentOf, pathDownTo } from "../internal/treeUtils";
 import { TreeNode } from "../TreeNode";
 import { AxisSpecifier } from "./pathExpression";
 
@@ -47,6 +47,26 @@ export function allDescendants(tn: TreeNode): TreeNode[] {
     return (tn.$children || []).concat(
         _.flatMap(tn.$children.map(kid => allDescendants(kid))));
 }
+
+export const AncestorAxisSpecifier: AxisSpecifier = {
+
+    type: "ancestor",
+
+    follow(tn: TreeNode, root: TreeNode): TreeNode[] {
+        const ancestorsAndThis = pathDownTo(tn, root);
+        return !!ancestorsAndThis ? _.dropRight(ancestorsAndThis, 1) : [];
+    },
+};
+
+export const AncestorOrSelfAxisSpecifier: AxisSpecifier = {
+
+    type: "ancestor-or-self",
+
+    follow(tn: TreeNode, root: TreeNode): TreeNode[] {
+        const ancestorsAndThis = pathDownTo(tn, root);
+        return !!ancestorsAndThis ? ancestorsAndThis : [];
+    },
+};
 
 export const FollowingSiblingAxisSpecifier: AxisSpecifier = {
 
