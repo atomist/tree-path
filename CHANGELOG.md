@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+-   Added support for union path expressions
+
 ## [0.1.5][] - 2017-12-10
 
 Axis specifier release

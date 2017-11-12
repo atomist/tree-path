@@ -31,6 +31,10 @@ export function isSuccessResult(a: any): a is SuccessResult {
     return !!a && !!a.length;
 }
 
+export function isFailureResult(a: any): a is FailureResult {
+    return typeof a === "string";
+}
+
 /**
  * One of the three core elements of a LocationStep. Inspired by XPath NodeTest.
  */
@@ -102,9 +106,20 @@ export class LocationStep {
 /**
  * Result of parsing a path expression.
  */
-export interface PathExpression {
+export interface SimplePathExpression {
 
     locationSteps: LocationStep[];
+}
+
+export interface UnionPathExpression {
+
+    unions: PathExpression[];
+}
+
+export type PathExpression = SimplePathExpression | UnionPathExpression;
+
+export function isUnionPathExpression(pe: PathExpression): pe is UnionPathExpression {
+    return !!(pe as UnionPathExpression).unions;
 }
 
 /**
@@ -113,5 +128,7 @@ export interface PathExpression {
  * @return {string}
  */
 export function stringify(pe: PathExpression): string {
-    return pe.locationSteps.map(l => "" + l).join("/");
+    return isUnionPathExpression(pe) ?
+        pe.unions.map(u => stringify(u)).join(" | ") :
+        pe.locationSteps.map(l => "" + l).join("/");
 }
