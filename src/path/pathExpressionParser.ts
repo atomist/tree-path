@@ -84,7 +84,7 @@ const NodeTestGrammar = {
 };
 
 const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
-    _axis: optional(firstOf("/", ".",
+    _axis: optional(firstOf("/", "..", ".",
         /[a-z\-]+::/)),
     axis: ctx => {
         switch (ctx._axis) {
@@ -94,7 +94,10 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                 return DescendantOrSelfAxisSpecifier;
             case "." :
                 return SelfAxisSpecifier;
+            case ".." :
+                return ParentAxisSpecifier;
             default:
+                // Full syntax, not abbreviated
                 if (ctx._axis.endsWith("::")) {
                     const specifier = ctx._axis.substr(0, ctx._axis.length - 2);
                     switch (specifier) {
@@ -121,7 +124,10 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                 throw new Error(`Unsupported axis specifier [${ctx._axis}]`);
         }
     },
-    ...NodeTestGrammar,
+    _test: optional(NodeTestGrammar),
+    // It's valid to omit the node test only with these axis specifiers
+    _validate: ctx => ctx._test || [ParentAxisSpecifier, SelfAxisSpecifier].includes(ctx.axis),
+    test: ctx => !!ctx._test ? ctx._test.test : AllNodeTest,
     _predicates: zeroOrMore(PredicateGrammar),
     predicates: ctx => ctx._predicates.map(p => p.term),
 });

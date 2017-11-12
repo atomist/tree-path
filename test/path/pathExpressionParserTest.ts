@@ -3,7 +3,7 @@ import "mocha";
 import * as assert from "power-assert";
 import {
     ChildAxisSpecifier, DescendantOrSelfAxisSpecifier,
-    FollowingSiblingAxisSpecifier,
+    FollowingSiblingAxisSpecifier, ParentAxisSpecifier, SelfAxisSpecifier,
 } from "../../src/path/axisSpecifiers";
 import { FunctionPredicate } from "../../src/path/FunctionPredicate";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
@@ -14,6 +14,22 @@ import {
 } from "../../src/path/predicates";
 
 describe("pathExpressionParser", () => {
+
+    it("should parse self", () => {
+        const expr = ".";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis ===  SelfAxisSpecifier);
+        assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
+    });
+
+    it("should parse parent", () => {
+        const expr = "..";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis ===  ParentAxisSpecifier);
+        assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
+    });
 
     it("should parse all children", () => {
         const expr = "/*";
