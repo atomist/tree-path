@@ -68,6 +68,16 @@ export const AncestorOrSelfAxisSpecifier: AxisSpecifier = {
     },
 };
 
+export const ParentAxisSpecifier: AxisSpecifier = {
+
+    type: "parent",
+
+    follow(tn: TreeNode, root: TreeNode): TreeNode[] {
+        const parent = parentOf(tn, root);
+        return !!parent ? [parent] : [];
+    },
+};
+
 export const FollowingSiblingAxisSpecifier: AxisSpecifier = {
 
     type: "following-sibling",

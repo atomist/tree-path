@@ -7,6 +7,7 @@ import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import {
     AncestorAxisSpecifier, AncestorOrSelfAxisSpecifier,
     ChildAxisSpecifier, DescendantAxisSpecifier, DescendantOrSelfAxisSpecifier, FollowingSiblingAxisSpecifier,
+    ParentAxisSpecifier,
     PrecedingSiblingAxisSpecifier,
     SelfAxisSpecifier,
 } from "./axisSpecifiers";
@@ -109,6 +110,8 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                             return DescendantOrSelfAxisSpecifier;
                         case FollowingSiblingAxisSpecifier.type :
                             return FollowingSiblingAxisSpecifier;
+                        case ParentAxisSpecifier.type :
+                            return ParentAxisSpecifier;
                         case PrecedingSiblingAxisSpecifier.type :
                             return PrecedingSiblingAxisSpecifier;
                         case SelfAxisSpecifier.type :
