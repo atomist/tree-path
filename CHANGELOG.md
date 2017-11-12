@@ -7,14 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.13...HEAD
+[Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.5...HEAD
 
 ### Changed
 
 
 ### Added
 
-- `ancestor` and `ancestor-or-self` axis specifiers
+## [0.1.5][] - 2017-12-10
+
+Axis specifier release
+
+[0.1.5]: https://github.com/atomist/tree-path-ts/tree/0.1.5
+
+### Added
+
+-   More axis specifiers
 
 ## [0.1.4][] - 2017-12-10
 
