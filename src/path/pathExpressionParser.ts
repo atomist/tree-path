@@ -5,7 +5,8 @@ import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
 import { Integer } from "@atomist/microgrammar/Primitives";
 import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import {
-    ChildAxisSpecifier, DescendantOrSelfAxisSpecifier, FollowingSiblingAxisSpecifier, PrecedingSiblingAxisSpecifier,
+    ChildAxisSpecifier, DescendantAxisSpecifier, DescendantOrSelfAxisSpecifier, FollowingSiblingAxisSpecifier,
+    PrecedingSiblingAxisSpecifier,
     SelfAxisSpecifier,
 } from "./axisSpecifiers";
 import { FunctionPredicate } from "./FunctionPredicate";
@@ -97,10 +98,16 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                     switch (specifier) {
                         case ChildAxisSpecifier.type :
                             return ChildAxisSpecifier;
+                        case DescendantAxisSpecifier.type :
+                            return DescendantAxisSpecifier;
+                        case DescendantOrSelfAxisSpecifier.type :
+                            return DescendantOrSelfAxisSpecifier;
                         case FollowingSiblingAxisSpecifier.type :
                             return FollowingSiblingAxisSpecifier;
                         case PrecedingSiblingAxisSpecifier.type :
                             return PrecedingSiblingAxisSpecifier;
+                        case SelfAxisSpecifier.type :
+                            return SelfAxisSpecifier;
                     }
                 }
                 throw new Error(`Unsupported axis specifier [${ctx._axis}]`);
