@@ -3,7 +3,8 @@ import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpressi
 
 import * as _ from "lodash";
 import { FunctionPredicate, isFunctionPredicate } from "./FunctionPredicate";
-import { allPredicates, toPathExpression } from "./utils";
+import { toPathExpression } from "./utils";
+import { allPredicates } from "../internal/pathExpressionUtils";
 
 export type ExpressionEngine = (node: TreeNode,
                                 parsed: PathExpression | string,
