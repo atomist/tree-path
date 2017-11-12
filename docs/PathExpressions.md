@@ -19,6 +19,8 @@ The following axes are supported:
 - self: `.`
 - child: `/`
 - descendant or self: `//`
+- following-sibling
+- preceding-sibling
 
 The folowing axes are not currently supported. Those in ~~strike through~~ are not relevant and will never be supported. The others may be if there is demand for them:
 
@@ -27,11 +29,9 @@ The folowing axes are not currently supported. Those in ~~strike through~~ are n
 - ~~attribute~~	
 - descendant
 - following
-- following-sibling
 - ~~namespace~~
 - parent	
 - preceding
-- preceding-sibling
 
 ### Functions
 XPath provides a set of functions to test nodes. Given that this project runs in a JavaScript environment, we provide a general solution: simply passing an arbitrary function to the runtime and invoking it in a predicate consisting of the function name preceded by `?`. For example:

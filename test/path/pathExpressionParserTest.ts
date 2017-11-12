@@ -1,7 +1,10 @@
 import "mocha";
 
 import * as assert from "power-assert";
-import { ChildAxisSpecifier, DescendantOrSelfAxisSpecifier } from "../../src/path/axisSpecifiers";
+import {
+    ChildAxisSpecifier, DescendantOrSelfAxisSpecifier,
+    FollowingSiblingAxisSpecifier,
+} from "../../src/path/axisSpecifiers";
 import { FunctionPredicate } from "../../src/path/FunctionPredicate";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
@@ -39,6 +42,15 @@ describe("pathExpressionParser", () => {
 
     it("should parse named children", () => {
         const expr = "/foo";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
+        const nnt = parsed.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
+    });
+
+    it("should parse named children with full syntax", () => {
+        const expr = "child::foo";
         const parsed = parsePathExpression(expr);
         assert(parsed.locationSteps.length === 1);
         assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
@@ -159,6 +171,15 @@ describe("pathExpressionParser", () => {
         assert(parsed.locationSteps[0].predicates.length === 1);
         const pred = parsed.locationSteps[0].predicates[0] as FunctionPredicate;
         assert(pred.name === "smeg");
+    });
+
+    it("should parse following sibling", () => {
+        const expr = "following-sibling::foo";
+        const parsed = parsePathExpression(expr);
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis === FollowingSiblingAxisSpecifier);
+        const nnt = parsed.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
     });
 
 });

@@ -1,6 +1,6 @@
 {
   "name": "@atomist/tree-path",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Atomist path expression support",
   "author": "Atomist, Inc.",
   "license": "GPL-3.0",

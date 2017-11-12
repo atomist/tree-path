@@ -14,6 +14,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+## [0.1.4][] - 2017-12-10
+
+Following sibling release
+
+[0.1.4]: https://github.com/atomist/tree-path-ts/tree/0.1.4
+
+### Added
+
+-   Added support for `following-sibling` axis specifier
+-   Added support for `preceding-sibling` axis specifier
+
 
 ## [0.1.3][] - 2017-11-10
 

@@ -2,9 +2,9 @@ import { TreeNode } from "../TreeNode";
 import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpression";
 
 import * as _ from "lodash";
+import { allPredicates } from "../internal/pathExpressionUtils";
 import { FunctionPredicate, isFunctionPredicate } from "./FunctionPredicate";
 import { toPathExpression } from "./utils";
-import { allPredicates } from "../internal/pathExpressionUtils";
 
 export type ExpressionEngine = (node: TreeNode,
                                 parsed: PathExpression | string,

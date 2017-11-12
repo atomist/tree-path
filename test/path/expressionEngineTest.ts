@@ -356,4 +356,28 @@ describe("expressionEngine", () => {
         assert(result.includes("veto"));
     });
 
+    it("should evaluate following sibling", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='x'][1]/following-sibling::Thing2");
+        assert(result === thing2);
+    });
+
+    it("should evaluate preceding sibling", () => {
+        const thing1 = {$name: "Thing1", $value: "x"};
+        const thing2 = {$name: "Thing2", $value: "x"};
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        const result = evaluateScalar(tn, "/*[@value='x'][2]/preceding-sibling::Thing1");
+        assert(result === thing1);
+    });
+
 });
