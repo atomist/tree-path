@@ -418,7 +418,7 @@ describe("expressionEngine", () => {
 
     it("should evaluate parent with abbreviated syntax");
 
-    it.skip("should evaluate descendant", () => {
+    it("should evaluate descendant", () => {
         const grandkid = {$name: "Thing1", $value: "x"};
         const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
         const root: TreeNode = {
@@ -426,7 +426,7 @@ describe("expressionEngine", () => {
                 kid,
             ],
         };
-        const result = evaluateExpression(root, "//descendant::*");
+        const result = evaluateExpression(root, "/descendant::*");
         assert.deepEqual(result, [ kid, grandkid ]);
     });
 
