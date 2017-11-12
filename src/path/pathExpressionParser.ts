@@ -3,10 +3,14 @@ import { Microgrammar } from "@atomist/microgrammar/Microgrammar";
 import { firstOf, optional } from "@atomist/microgrammar/Ops";
 import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
 import { Integer } from "@atomist/microgrammar/Primitives";
-import { Rep1Sep, zeroOrMore } from "@atomist/microgrammar/Rep";
+import { Rep1Sep, RepSep, zeroOrMore } from "@atomist/microgrammar/Rep";
 import {
-    AncestorAxisSpecifier, AncestorOrSelfAxisSpecifier,
-    ChildAxisSpecifier, DescendantAxisSpecifier, DescendantOrSelfAxisSpecifier, FollowingSiblingAxisSpecifier,
+    AncestorAxisSpecifier,
+    AncestorOrSelfAxisSpecifier,
+    ChildAxisSpecifier,
+    DescendantAxisSpecifier,
+    DescendantOrSelfAxisSpecifier,
+    FollowingSiblingAxisSpecifier,
     ParentAxisSpecifier,
     PrecedingSiblingAxisSpecifier,
     SelfAxisSpecifier,
@@ -28,7 +32,7 @@ export function parsePathExpression(expr: string): PathExpression {
     if (!pg._initialized) {
         pg._term = firstOf(
             ValuePredicateGrammar, PositionPredicateGrammar,
-            PathExpressionGrammar, FunctionPredicateGrammar);
+            SimplePathExpressionGrammarDefs, FunctionPredicateGrammar);
         pg._initialized = true;
         PredicateGrammar._init();
     }
@@ -36,7 +40,7 @@ export function parsePathExpression(expr: string): PathExpression {
     const m = PathExpressionGrammar.exactMatch(expr);
     if (isPatternMatch(m)) {
         // logger.debug("Successfully parsed path expression [%s]: %s", expr, stringify(m));
-        return m;
+        return (m as any).pathExpression;
     } else {
         // logger.info("Error parsing path expression [%s]: %s", expr, JSON.stringify(m));
         throw new Error("Failure: " + JSON.stringify(m));
@@ -137,8 +141,17 @@ const RelativePathExpressionDefs = {
     locationSteps: ctx => ctx._locationSteps.map(l => new LocationStep(l.axis, l.test, l.predicates)),
 };
 
-const PathExpressionGrammar = Microgrammar.fromDefinitions<PathExpression>({
+const SimplePathExpressionGrammarDefs = {
     _slash: optional("/"),
     absolute: ctx => !!ctx._slash,
     ...RelativePathExpressionDefs,
+};
+
+const PathExpressionGrammar = Microgrammar.fromDefinitions<PathExpression>({
+    _underlying: new RepSep(SimplePathExpressionGrammarDefs, "|"),
+    pathExpression: ctx =>
+        ctx._underlying.length > 1 ?
+            {unions: ctx._underlying} :
+            ctx._underlying[0],
+
 });

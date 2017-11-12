@@ -1,5 +1,8 @@
 import { TreeNode } from "../TreeNode";
-import { ExecutionResult, isSuccessResult, PathExpression } from "./pathExpression";
+import {
+    ExecutionResult, FailureResult, isFailureResult, isSuccessResult, isUnionPathExpression,
+    PathExpression, SuccessResult,
+} from "./pathExpression";
 
 import * as _ from "lodash";
 import { allPredicates } from "../internal/pathExpressionUtils";
@@ -23,17 +26,18 @@ export type ExpressionEngine = (node: TreeNode,
 export function evaluateExpression(root: TreeNode,
                                    pex: string | PathExpression, functionRegistry: object = {}): ExecutionResult {
     const parsed = toPathExpression(pex);
+    const failure = validateFunctionPredicates(parsed, functionRegistry);
+    if (isFailureResult(failure)) {
+        return failure;
+    }
 
-    // Validate function predicates
-    const functionPredicates: FunctionPredicate[] = allPredicates(parsed)
-        .filter(f => isFunctionPredicate(f))
-        .map(f => f as FunctionPredicate);
-
-    const missingFunctions = functionPredicates
-        .filter(fp => !functionRegistry[fp.name])
-        .map(fp => fp.name);
-    if (missingFunctions.length > 0) {
-        return `Function predicate '${missingFunctions.join()}' not found in registry`;
+    if (isUnionPathExpression(parsed)) {
+        const results = parsed.unions.map(u => evaluateExpression(root, u));
+        const fail = results.find(r => isFailureResult(r));
+        if (!!fail) {
+            return fail;
+        }
+        return _.uniq(_.flatten(results.map(r => r as SuccessResult)));
     }
 
     let currentResult: ExecutionResult = [root];
@@ -54,6 +58,19 @@ export function evaluateExpression(root: TreeNode,
         }
     }
     return currentResult;
+}
+
+function validateFunctionPredicates(pex: PathExpression, functionRegistry: object): FailureResult | void {
+    const functionPredicates: FunctionPredicate[] = allPredicates(pex)
+        .filter(f => isFunctionPredicate(f))
+        .map(f => f as FunctionPredicate);
+
+    const missingFunctions = functionPredicates
+        .filter(fp => !functionRegistry[fp.name])
+        .map(fp => fp.name);
+    if (missingFunctions.length > 0) {
+        return `Function predicate '${missingFunctions.join()}' not found in registry`;
+    }
 }
 
 /**
