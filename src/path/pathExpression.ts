@@ -1,5 +1,6 @@
 import { TreeNode } from "../TreeNode";
 import { ExpressionEngine } from "./expressionEngine";
+import { toPathExpression } from "./utils";
 
 /**
  * One of the three core elements of a LocationStep. Borrowed from XPath.
@@ -120,6 +121,18 @@ export type PathExpression = SimplePathExpression | UnionPathExpression;
 
 export function isUnionPathExpression(pe: PathExpression): pe is UnionPathExpression {
     return !!(pe as UnionPathExpression).unions;
+}
+
+/**
+ * Create a Union path expression from the given array of strings or PathExpression
+ * instances
+ * @param {Array<string | PathExpression>} pathExpressions
+ * @return {UnionPathExpression}
+ */
+export function unionOf(pathExpressions: Array<string | PathExpression>): UnionPathExpression {
+    return {
+        unions: pathExpressions.map(pe => toPathExpression(pe)),
+    };
 }
 
 /**
