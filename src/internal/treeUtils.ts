@@ -35,6 +35,9 @@ export function pathDownTo(node: TreeNode, from: TreeNode, seen: TreeNode[] = []
  * @return {TreeNode}
  */
 export function parentOf(node: TreeNode, root: TreeNode): TreeNode {
+    if (node.$parent) {
+        return node.$parent;
+    }
     const path = pathDownTo(node, root);
     return !!path && path.length >= 2 ? path[path.length - 2] : undefined;
 }

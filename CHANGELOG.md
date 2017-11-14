@@ -9,12 +9,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.5...HEAD
 
-### Changed
+## [0.1.7][] - 2017-12-15
 
+Nested predicate fix release
+
+[0.1.7]: https://github.com/atomist/tree-path-ts/tree/0.1.7
 
 ### Added
 
 -   Added support for union path expressions
+-   Added `$parent` optional property on `TreeNode`, which increases
+efficiency and corrects handling of ancestor axes in nested predicates
 
 ## [0.1.5][] - 2017-12-10
 

@@ -11,6 +11,13 @@ export interface TreeNode {
     readonly $name: string;
 
     /**
+     * Used to evaluate ancestor and other such predicates efficiently.
+     * If not available, backup resolution will attempt to navigate from
+     * document root if available.
+     */
+    $parent?: TreeNode;
+
+    /**
      * Children of the node if it's a non-terminal
      */
     $children?: TreeNode[];

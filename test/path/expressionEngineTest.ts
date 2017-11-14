@@ -380,6 +380,34 @@ describe("expressionEngine", () => {
         assert(result === thing1);
     });
 
+    it("should evaluate has a preceding sibling in predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"} as TreeNode;
+        const thing2 = {$name: "Thing2", $value: "x"} as TreeNode;
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        thing1.$parent = thing2.$parent = tn;
+        const result = evaluateScalar(tn, "/*[@value='x'][/preceding-sibling::*]");
+        assert(!!result);
+        assert(result === thing2);
+    });
+
+    it("should evaluate has named preceding sibling in predicate", () => {
+        const thing1 = {$name: "Thing1", $value: "x"} as TreeNode;
+        const thing2 = {$name: "Thing2", $value: "x"} as TreeNode;
+        const tn: TreeNode = {
+            $name: "foo", $children: [
+                thing1, thing2,
+            ],
+        };
+        thing1.$parent = thing2.$parent = tn;
+        const result = evaluateScalar(tn, "/*[/preceding-sibling::Thing1]");
+        assert(!!result);
+        assert(result === thing2);
+    });
+
     it("should evaluate ancestor", () => {
         const grandkid = {$name: "Thing1", $value: "x"};
         const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
