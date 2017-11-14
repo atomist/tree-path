@@ -5,11 +5,9 @@
  * TreeNode instances may be parsed from text input, in which case
  * they will have offsets within the input.
  * NB: If you need to JSON stringify TreeNode instances,
- * use the treeNodeReplacer function to avoid circularity errors.
+ * use the treeNodeReplacer function or DefaultTreeReplacer constant
+ * to avoid circularity errors.
  */
-
-import { isNumber } from "util";
-
 export interface TreeNode {
 
     readonly $name: string;
@@ -58,3 +56,9 @@ export function treeNodeReplacer(...keep: string[]): (key: string, value: any) =
         return undefined;
     };
 }
+
+/**
+ * Default replacer to use to safely stringify tree nodes
+ * @type {(key: string, value: any) => any}
+ */
+export const DefaultTreeNodeReplacer = treeNodeReplacer();

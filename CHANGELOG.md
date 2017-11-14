@@ -7,7 +7,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased][]
 
-[Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.5...HEAD
+[Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.8...HEAD
+
+## [0.1.8][] - 2017-12-15
+
+JSON.stringify release
+
+[0.1.8]: https://github.com/atomist/tree-path-ts/tree/0.1.8
+
+### Added
+
+-   `treeReplacer` function and `DefaultTreeReplacer` to allow safe `JSON.stringify`
 
 ## [0.1.7][] - 2017-12-15
 

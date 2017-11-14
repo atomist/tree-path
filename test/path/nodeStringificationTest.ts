@@ -1,5 +1,5 @@
 import "mocha";
-import { TreeNode, treeNodeReplacer } from "../../src/TreeNode";
+import { DefaultTreeNodeReplacer, TreeNode, treeNodeReplacer } from "../../src/TreeNode";
 
 import * as assert from "power-assert";
 import { fail } from "power-assert";
@@ -15,7 +15,7 @@ describe("node JSON stringification", () => {
             ],
         };
         thing1.$parent = thing2.$parent = tn;
-        const s = JSON.stringify(tn, treeNodeReplacer());
+        const s = JSON.stringify(tn, DefaultTreeNodeReplacer);
         assert(!!s);
         assert(s.includes("Thing1"));
         assert(s.includes("Thing2"));
