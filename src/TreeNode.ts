@@ -1,11 +1,15 @@
-
 /**
  * Core abstraction supporting path expressions.
  * Represents a tree node. Property and function names begin with $
  * to ensure they're out of band if we mix in user data.
  * TreeNode instances may be parsed from text input, in which case
  * they will have offsets within the input.
+ * NB: If you need to JSON stringify TreeNode instances,
+ * use the treeNodeReplacer function to avoid circularity errors.
  */
+
+import { isNumber } from "util";
+
 export interface TreeNode {
 
     readonly $name: string;
@@ -37,4 +41,20 @@ export interface TreeNode {
 
 export function isTerminal(tn: TreeNode): boolean {
     return tn.$value && !(tn.$children && tn.$children.length > 0);
+}
+
+/**
+ * Replacer to safely stringify nodes, avoiding circularity errors
+ * @params keep: Property names to include. Allows us to include
+ * node-specific data. By default includes all array elements and
+ * name, children, value and offset.
+ * @constructor
+ */
+export function treeNodeReplacer(...keep: string[]): (key: string, value: any) => any {
+    return (key, value) => {
+        if (key.match(/[0-9]+/) || ["", "$name", "$children", "$value", "$offset"].concat(keep).includes(key)) {
+            return value;
+        }
+        return undefined;
+    };
 }
