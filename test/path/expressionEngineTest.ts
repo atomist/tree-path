@@ -10,7 +10,7 @@ import {
     evaluateScalarValues,
 } from "../../src/path/expressionEngine";
 import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
-import { FailureResult, LocationStep, PathExpression, SuccessResult } from "../../src/path/pathExpression";
+import { FailureResult, LocationStep, PathExpression, SuccessResult, unionOf } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
 import { TreeNode } from "../../src/TreeNode";
@@ -488,7 +488,7 @@ describe("expressionEngine", () => {
                 kid,
             ],
         };
-        const result = evaluateExpression(root, "//Thing2 | /Thing2/Thing1 | //*");
+        const result = evaluateExpression(root, unionOf(["//Thing2", "/Thing2/Thing1", "//*"]));
         assert.deepEqual(result, [ kid, grandkid, root ]);
     });
 

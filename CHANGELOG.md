@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 [Unreleased]: https://github.com/atomist/tree-path-ts/compare/0.1.8...HEAD
 
+### Added
+
+-   `unionOf` convenience function to combine path expressions
+
 ## [0.1.8][] - 2017-12-15
 
 JSON.stringify release
