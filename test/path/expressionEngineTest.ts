@@ -468,28 +468,4 @@ describe("expressionEngine", () => {
         assert.deepEqual(result, [ kid, grandkid ]);
     });
 
-    it("should evaluate union path expression", () => {
-        const grandkid = {$name: "Thing1", $value: "x"};
-        const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
-        const root: TreeNode = {
-            $name: "foo", $children: [
-                kid,
-            ],
-        };
-        const result = evaluateExpression(root, "//Thing2 | /Thing2/Thing1");
-        assert.deepEqual(result, [ kid, grandkid ]);
-    });
-
-    it("should evaluate union path expression x3", () => {
-        const grandkid = {$name: "Thing1", $value: "x"};
-        const kid = {$name: "Thing2", $value: "x", $children: [grandkid]};
-        const root: TreeNode = {
-            $name: "foo", $children: [
-                kid,
-            ],
-        };
-        const result = evaluateExpression(root, unionOf(["//Thing2", "/Thing2/Thing1", "//*"]));
-        assert.deepEqual(result, [ kid, grandkid, root ]);
-    });
-
 });
