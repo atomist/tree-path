@@ -10,7 +10,7 @@ import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
 import { SimplePathExpression, UnionPathExpression } from "../../src/path/pathExpression";
 import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import {
-    AttributeEqualityPredicate, NestedPathExpressionPredicate,
+    AttributeEqualityPredicate, NestedPathExpressionPredicate, OrPredicate,
     PositionPredicate,
 } from "../../src/path/predicates";
 
@@ -175,6 +175,19 @@ describe("pathExpressionParser", () => {
         assert(npe.locationSteps[1].predicates.length === 1);
         const pred2 = npe.locationSteps[1].predicates[0] as NestedPathExpressionPredicate;
         assert(!!pred2.pathExpression);
+    });
+
+    it.skip("should OR predicates", () => {
+        const expr = "/foo[@value='bar' or @value='baz']";
+        const parsed = parsePathExpression(expr) as SimplePathExpression;
+        assert(parsed.locationSteps.length === 1);
+        assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
+        const nnt = parsed.locationSteps[0].test as NamedNodeTest;
+        assert(nnt.name === "foo");
+        assert(parsed.locationSteps[0].predicates.length === 1);
+        const pred = parsed.locationSteps[0].predicates[0] as OrPredicate;
+        assert((pred.a as any).value === "bar");
+        assert((pred.a as any).value === "baz");
     });
 
     it("should AND predicates");

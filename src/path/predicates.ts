@@ -48,3 +48,21 @@ export class NestedPathExpressionPredicate implements Predicate {
         return stringify(this.pathExpression);
     }
 }
+
+export class OrPredicate implements Predicate {
+
+    constructor(public readonly a: Predicate, public readonly b: Predicate) {
+    }
+
+    public evaluate(nodeToTest: TreeNode,
+                    returnedNodes: TreeNode[],
+                    ee: ExpressionEngine,
+                    functionRegistry: object): boolean {
+        return this.a.evaluate(nodeToTest, returnedNodes, ee, functionRegistry) &&
+            this.b.evaluate(nodeToTest, returnedNodes, ee, functionRegistry);
+    }
+
+    public toString() {
+        return `${this.a} or ${this.b}'`;
+    }
+}
