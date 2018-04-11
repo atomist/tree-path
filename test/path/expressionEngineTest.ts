@@ -14,6 +14,8 @@ import { parsePathExpression } from "../../src/path/pathExpressionParser";
 import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../src/path/predicates";
 import { TreeNode } from "../../src/TreeNode";
 
+// tslint:disable:max-file-line-count
+
 describe("expressionEngine", () => {
 
     it("should evaluateExpression no matches", () => {
