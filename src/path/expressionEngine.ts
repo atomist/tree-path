@@ -21,7 +21,7 @@ export type ExpressionEngine = (node: TreeNode,
  * @param root  root node to evaluateExpression the path against
  * @param pex   Parsed or string path expression.
  * @param functionRegistry registry to use to look up functions
- * @return
+ * @return ExecutionResult
  */
 export function evaluateExpression(root: TreeNode,
                                    pex: string | PathExpression, functionRegistry: object = {}): ExecutionResult {

@@ -1,7 +1,3 @@
-/**
- * General alternative to XPath functions. Allows the identification
- * of arbitrary function to be executed against the
- */
 
 import { TreeNode } from "../TreeNode";
 import { ExpressionEngine } from "./expressionEngine";
@@ -9,6 +5,8 @@ import { Predicate, PredicateTest } from "./pathExpression";
 
 /**
  * Predicate that executes a named predicate function, defined on the functionRegistry
+ * General alternative to XPath functions. Allows the identification
+ * of arbitrary functions to be executed against nodes
  */
 export class FunctionPredicate implements Predicate {
 
