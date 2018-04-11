@@ -131,7 +131,7 @@ export function isUnionPathExpression(pe: PathExpression): pe is UnionPathExpres
  */
 export function unionOf(pathExpressions: Array<string | PathExpression>): UnionPathExpression {
     return {
-        unions: pathExpressions.map(pe => toPathExpression(pe)),
+        unions: pathExpressions.map(toPathExpression),
     };
 }
 
@@ -142,6 +142,6 @@ export function unionOf(pathExpressions: Array<string | PathExpression>): UnionP
  */
 export function stringify(pe: PathExpression): string {
     return isUnionPathExpression(pe) ?
-        pe.unions.map(u => stringify(u)).join(" | ") :
+        pe.unions.map(stringify).join(" | ") :
         pe.locationSteps.map(l => "" + l).join("/");
 }

@@ -45,7 +45,7 @@ export function allDescendants(tn: TreeNode): TreeNode[] {
         return [];
     }
     return (tn.$children || []).concat(
-        _.flatMap(tn.$children.map(kid => allDescendants(kid))));
+        _.flatMap(tn.$children.map(allDescendants)));
 }
 
 export const AncestorAxisSpecifier: AxisSpecifier = {

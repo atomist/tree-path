@@ -1,4 +1,4 @@
-import "mocha";
+
 import { DefaultTreeNodeReplacer, TreeNode, treeNodeReplacer } from "../../src/TreeNode";
 
 import * as assert from "power-assert";

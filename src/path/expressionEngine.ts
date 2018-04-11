@@ -33,7 +33,7 @@ export function evaluateExpression(root: TreeNode,
 
     if (isUnionPathExpression(parsed)) {
         const results = parsed.unions.map(u => evaluateExpression(root, u));
-        const fail = results.find(r => isFailureResult(r));
+        const fail = results.find(isFailureResult);
         if (!!fail) {
             return fail;
         }
@@ -47,10 +47,10 @@ export function evaluateExpression(root: TreeNode,
                 const allNextNodes =
                     currentResult.map(n => locationStep.follow(n, root, evaluateExpression, functionRegistry));
                 const next = _.flatten(allNextNodes);
-                console.debug("Executing location step %s against [%s]:count=%d",
-                    locationStep,
-                    currentResult.map(n => n.$name).join(","),
-                    next.length);
+                // console.debug("Executing location step %s against [%s]:count=%d",
+                //     locationStep,
+                //     currentResult.map(n => n.$name).join(","),
+                //     next.length);
                 currentResult = next;
             }
         } else {
@@ -62,8 +62,8 @@ export function evaluateExpression(root: TreeNode,
 
 function validateFunctionPredicates(pex: PathExpression, functionRegistry: object): FailureResult | void {
     const functionPredicates: FunctionPredicate[] = allPredicates(pex)
-        .filter(f => isFunctionPredicate(f))
-        .map(f => f as FunctionPredicate);
+        .filter(isFunctionPredicate)
+        .map(f => f);
 
     const missingFunctions = functionPredicates
         .filter(fp => !functionRegistry[fp.name])
