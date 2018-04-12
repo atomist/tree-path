@@ -31,7 +31,7 @@ export function pathDownTo(node: TreeNode, from: TreeNode, seen: TreeNode[] = []
 /**
  * Find the parent of the target node.
  * @param {TreeNode} root
- * @param {TreeNode} node
+ * @param {TreeNode} node we are searching down to
  * @return {TreeNode}
  */
 export function parentOf(node: TreeNode, root: TreeNode): TreeNode {
