@@ -10,6 +10,9 @@
  */
 export interface TreeNode {
 
+    /**
+     * Name of the node, available in path expressions
+     */
     readonly $name: string;
 
     /**

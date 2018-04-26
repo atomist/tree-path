@@ -83,9 +83,9 @@ export interface Predicate {
  */
 export class LocationStep {
 
-    constructor(public axis: AxisSpecifier,
-                public test: NodeTest,
-                public predicates: Predicate[]) {
+    constructor(public readonly axis: AxisSpecifier,
+                public readonly test: NodeTest,
+                public readonly predicates: Predicate[]) {
     }
 
     public follow(tn: TreeNode, root: TreeNode, ee: ExpressionEngine, functionRegistry: object = {}): ExecutionResult {
