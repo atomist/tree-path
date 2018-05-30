@@ -17,7 +17,7 @@
     "url": "https://github.com/atomist/tree-path-ts/issues"
   },
   "dependencies": {
-    "@atomist/microgrammar": "^0.7.0",
+    "@atomist/microgrammar": "https://r.atomist.com/SkY2_gHYkm",
     "npm": "^6.0.0"
   },
   "devDependencies": {
