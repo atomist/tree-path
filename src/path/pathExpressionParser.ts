@@ -1,9 +1,14 @@
-import { Concat } from "@atomist/microgrammar/matchers/Concat";
-import { Microgrammar } from "@atomist/microgrammar/Microgrammar";
-import { firstOf, optional } from "@atomist/microgrammar/Ops";
-import { isPatternMatch } from "@atomist/microgrammar/PatternMatch";
-import { Integer } from "@atomist/microgrammar/Primitives";
-import { Rep1Sep, RepSep, zeroOrMore } from "@atomist/microgrammar/Rep";
+import {
+    Concat,
+    firstOf,
+    Integer,
+    isPatternMatch,
+    Microgrammar,
+    optional,
+    Rep1Sep,
+    RepSep,
+    zeroOrMore,
+} from "@atomist/microgrammar";
 import {
     AncestorAxisSpecifier,
     AncestorOrSelfAxisSpecifier,
@@ -59,7 +64,7 @@ const FunctionPredicateGrammar = Microgrammar.fromString<Predicate>(
     });
 
 const PositionPredicateGrammar = Microgrammar.fromString<Predicate>(
-    "${position}", {position: Integer});
+    "${position}", { position: Integer });
 
 const PredicateGrammarDefs = {
     _lb: "[",
@@ -92,13 +97,13 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
         /[a-z\-]+::/)),
     axis: ctx => {
         switch (ctx._axis) {
-            case undefined :
+            case undefined:
                 return ChildAxisSpecifier;
-            case "/" :
+            case "/":
                 return DescendantOrSelfAxisSpecifier;
-            case "." :
+            case ".":
                 return SelfAxisSpecifier;
-            case ".." :
+            case "..":
                 return ParentAxisSpecifier;
             default:
                 // Full syntax, not abbreviated
@@ -109,19 +114,19 @@ const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
                             return AncestorAxisSpecifier;
                         case AncestorOrSelfAxisSpecifier.type:
                             return AncestorOrSelfAxisSpecifier;
-                        case ChildAxisSpecifier.type :
+                        case ChildAxisSpecifier.type:
                             return ChildAxisSpecifier;
-                        case DescendantAxisSpecifier.type :
+                        case DescendantAxisSpecifier.type:
                             return DescendantAxisSpecifier;
-                        case DescendantOrSelfAxisSpecifier.type :
+                        case DescendantOrSelfAxisSpecifier.type:
                             return DescendantOrSelfAxisSpecifier;
-                        case FollowingSiblingAxisSpecifier.type :
+                        case FollowingSiblingAxisSpecifier.type:
                             return FollowingSiblingAxisSpecifier;
-                        case ParentAxisSpecifier.type :
+                        case ParentAxisSpecifier.type:
                             return ParentAxisSpecifier;
-                        case PrecedingSiblingAxisSpecifier.type :
+                        case PrecedingSiblingAxisSpecifier.type:
                             return PrecedingSiblingAxisSpecifier;
-                        case SelfAxisSpecifier.type :
+                        case SelfAxisSpecifier.type:
                             return SelfAxisSpecifier;
                     }
                 }
@@ -151,7 +156,7 @@ const PathExpressionGrammar = Microgrammar.fromDefinitions<PathExpression>({
     _underlying: new RepSep(SimplePathExpressionGrammarDefs, "|"),
     pathExpression: ctx =>
         ctx._underlying.length > 1 ?
-            {unions: ctx._underlying} :
+            { unions: ctx._underlying } :
             ctx._underlying[0],
 
 });

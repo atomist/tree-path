@@ -1,24 +1,30 @@
 {
   "name": "@atomist/tree-path",
-  "version": "0.1.10",
+  "version": "0.2.0",
   "description": "Atomist path expression support",
-  "author": "Atomist, Inc.",
-  "license": "GPL-3.0",
+  "author": {
+    "name": "Atomist",
+    "email": "support@atomist.com",
+    "url": "https://atomist.com/"
+  },
+  "license": "SEE LICENSE IN LICENSE",
   "homepage": "https://github.com/atomist/tree-path-ts#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/atomist/tree-path-ts.git"
   },
-  "keywords": [
-    "atomist",
-    "automation"
-  ],
   "bugs": {
     "url": "https://github.com/atomist/tree-path-ts/issues"
   },
+  "keywords": [
+    "atomist",
+    "parser",
+    "path-expressions"
+  ],
   "dependencies": {
-    "@atomist/microgrammar": "https://r.atomist.com/SkY2_gHYkm",
-    "npm": "^6.0.0"
+    "@atomist/microgrammar": "^0.9.1",
+    "@types/lodash": "^4.14.116",
+    "lodash": "^4.17.10"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.48",
@@ -50,7 +56,7 @@
     "typedoc": "typedoc --mode modules --excludeExternals"
   },
   "engines": {
-    "node": "8.5.x",
-    "npm": "5.3.x"
+    "node": ">=8.0.0",
+    "npm": ">=5.0.0"
   }
 }
