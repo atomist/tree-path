@@ -1,37 +1,41 @@
 # @atomist/tree-path
 
-[![Build Status](https://travis-ci.org/atomist/tree-path-ts.svg?branch=master)](https://travis-ci.org/atomist/tree-path-ts)
+[![npm version](https://badge.fury.io/js/%40atomist%2Ftree-path.svg)](https://badge.fury.io/js/%40atomist%2Ftree-path)
 
-[Node][node] module [`@atomist/tree-path-ts`] defining trees and path expressions.  
-Primarily intended for use in Atomist client automations, for consistent execution against any AST.
+[Node][node] module `@atomist/tree-path-ts` defining trees and path
+expressions.  These capabilities were created for use in
+[Atomist][atomist] code transformations, including those used to
+transform seed projects into new projects.
 
-XPath-like path expressions can be executed against any implementation of the simple `TreeNode` interface.
-This is typically used to expose ASTS: for example, those resulting from ANTLR grammars,
- [microgrammars](https://github.com/atomist/microgrammar) or a
-standalone parser such as the TypeScript compiler's parser. The ability to skip levels in navigating path expressions (e.g. via `//`) is invaluable in ignoring irrelevant levels of language ASTs, which tend to be noisy.
+XPath-like path expressions can be executed against any implementation
+of the simple `TreeNode` interface.  This is typically used to expose
+ASTS: for example, those resulting from ANTLR grammars,
+[microgrammars][] or a standalone parser such as the TypeScript
+compiler's parser.  The ability to skip levels in navigating path
+expressions (e.g., via `//`) is invaluable in ignoring irrelevant
+levels of language ASTs, which tend to be noisy.
 
-For example, find all variable names in a TypeScript file (using TypeScript AST integration in [automation-client](https://github.com/atomist/automation-client-ts):
+For example, find all variable names in a TypeScript file (using
+TypeScript AST integration in [automation-client][]:
 
 ```typescript
 const variableNames = evaluateScalarValue(
-	sourceFile, 
+	sourceFile,
 	"//VariableDeclaration/Identifier");
 ```
 
-
-[node]: https://nodejs.org/ (Node.js)
-[automation-client]: https://www.npmjs.com/package/@atomist/tree-path-ts
+[microgrammars]: https://github.com/atomist/microgrammar (Atomist Microgrammar Node.js Package)
+[automation-client]: https://github.com/atomist/automation-client-ts (Atomist Automation Client)
 
 ## Concepts
 
-
-For more information, please read [Tree and path expression overview](docs/PathExpressions.md).
+For more information, please read [Tree and path expression
+overview](docs/PathExpressions.md).
 
 ## Support
 
 General support questions should be discussed in the `#support`
-channel on our community Slack team
-at [atomist-community.slack.com][slack].
+channel in the [Atomist community Slack workspace][slack].
 
 If you find a problem, please create an [issue][].
 
@@ -41,40 +45,36 @@ If you find a problem, please create an [issue][].
 
 You will need to install [node][] to build and test this project.
 
-### Build and Test
+[node]: https://nodejs.org/ (Node.js)
+
+### Build and test
+
+Use the following package scripts to build, test, and perform other
+development tasks.
 
 Command | Reason
 ------- | ------
-`npm install` | to install all the required packages
-`npm run lint` | to run tslint against the TypeScript
-`npm run compile` | to compile all TypeScript into JavaScript
-`npm test` | to run tests and ensure everything is working
-`npm run autotest` | run tests continuously (you may also need to run `tsc -w`)
-`npm run clean` | remove stray compiled JavaScript files and build directory
+`npm install` | install project dependencies
+`npm run build` | compile, test, lint, and generate docs
+`npm start` | start the Atomist API client
+`npm run autostart` | run the client, refreshing when files change
+`npm run lint` | run TSLint against the TypeScript
+`npm run compile` | generate types from GraphQL and compile TypeScript
+`npm test` | run tests
+`npm run autotest` | run tests every time a file changes
+`npm run clean` | remove files generated during the build
 
 ### Release
 
-To create a new release of the project, simply push a tag of the form
-`M.N.P` where `M`, `N`, and `P` are integers that form the next
-appropriate [semantic version][semver] for release.  The version in
-the package.json is replaced by the build and is totally ignored!  For
-example:
+Releases are managed by the [Atomist SDM][atomist-sdm].  Press the
+release button in the Atomist dashboard or Slack.
 
-[semver]: http://semver.org
-
-```
-$ git tag -a 1.2.3
-$ git push --tags
-```
-
-The Travis CI build (see badge at the top of this page) will publish
-the NPM module and automatically create a GitHub release using the tag
-name for the release and the comment provided on the annotated tag as
-the contents of the release notes.
+[atomist-sdm]: https://github.com/atomist/atomist-sdm (Atomist Software Delivery Machine)
 
 ---
-Created by [Atomist][atomist].
-Need Help?  [Join our Slack team][slack].
 
-[atomist]: https://www.atomist.com/
-[slack]: https://join.atomist.com
+Created by [Atomist][atomist].
+Need Help?  [Join our Slack workspace][slack].
+
+[atomist]: https://atomist.com/ (Atomist - How Teams Deliver Software)
+[slack]: https://join.atomist.com/ (Atomist Community Slack)
