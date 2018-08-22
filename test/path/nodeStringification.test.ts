@@ -1,5 +1,5 @@
 
-import { DefaultTreeNodeReplacer, TreeNode, treeNodeReplacer } from "../../src/TreeNode";
+import { DefaultTreeNodeReplacer, TreeNode, treeNodeReplacer } from "../../lib/TreeNode";
 
 import * as assert from "power-assert";
 import { fail } from "power-assert";

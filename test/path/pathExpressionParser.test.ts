@@ -3,15 +3,15 @@ import * as assert from "power-assert";
 import {
     ChildAxisSpecifier, DescendantOrSelfAxisSpecifier,
     FollowingSiblingAxisSpecifier, ParentAxisSpecifier, SelfAxisSpecifier,
-} from "../../src/path/axisSpecifiers";
-import { FunctionPredicate } from "../../src/path/FunctionPredicate";
-import { AllNodeTest, NamedNodeTest } from "../../src/path/nodeTests";
-import { SimplePathExpression, UnionPathExpression } from "../../src/path/pathExpression";
-import { parsePathExpression } from "../../src/path/pathExpressionParser";
+} from "../../lib/path/axisSpecifiers";
+import { FunctionPredicate } from "../../lib/path/FunctionPredicate";
+import { AllNodeTest, NamedNodeTest } from "../../lib/path/nodeTests";
+import { SimplePathExpression, UnionPathExpression } from "../../lib/path/pathExpression";
+import { parsePathExpression } from "../../lib/path/pathExpressionParser";
 import {
     AttributeEqualityPredicate, NestedPathExpressionPredicate, OrPredicate,
     PositionPredicate,
-} from "../../src/path/predicates";
+} from "../../lib/path/predicates";
 
 describe("pathExpressionParser", () => {
 

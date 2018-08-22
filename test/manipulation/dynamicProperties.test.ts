@@ -1,7 +1,7 @@
 
 import * as assert from "power-assert";
-import { defineDynamicProperties } from "../../src/manipulation/enrichment";
-import { TreeNode } from "../../src/TreeNode";
+import { defineDynamicProperties } from "../../lib/manipulation/enrichment";
+import { TreeNode } from "../../lib/TreeNode";
 
 describe("dynamic property enrichment", () => {
 

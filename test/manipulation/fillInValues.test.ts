@@ -1,7 +1,7 @@
 
 import * as assert from "power-assert";
-import { fillInEmptyNonTerminalValues } from "../../src/manipulation/enrichment";
-import { TreeNode } from "../../src/TreeNode";
+import { fillInEmptyNonTerminalValues } from "../../lib/manipulation/enrichment";
+import { TreeNode } from "../../lib/TreeNode";
 
 describe("fill in values", () => {
 

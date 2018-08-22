@@ -1,8 +1,8 @@
 import * as assert from "power-assert";
 
-import { evaluateExpression } from "../../src/path/expressionEngine";
-import { unionOf } from "../../src/path/pathExpression";
-import { TreeNode } from "../../src/TreeNode";
+import { evaluateExpression } from "../../lib/path/expressionEngine";
+import { unionOf } from "../../lib/path/pathExpression";
+import { TreeNode } from "../../lib/TreeNode";
 
 describe("union path expressions", () => {
 
