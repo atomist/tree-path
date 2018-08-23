@@ -1,6 +1,6 @@
 {
   "name": "@atomist/tree-path",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Atomist path expression support",
   "author": {
     "name": "Atomist",
