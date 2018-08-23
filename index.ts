@@ -29,7 +29,9 @@ export {
 
 export {
     evaluateExpression,
+    evaluateScalar,
     evaluateScalarValue,
+    evaluateScalarValues,
 } from "./lib/path/expressionEngine";
 
 export {
@@ -45,7 +47,12 @@ export {
     NodeTest,
     PathExpression,
     stringify,
+    UnionPathExpression,
 } from "./lib/path/pathExpression";
+
+export {
+    parsePathExpression,
+} from "./lib/path/pathExpressionParser";
 
 export {
     toPathExpression,
@@ -54,3 +61,8 @@ export {
 export {
     TreeNode,
 } from "./lib/TreeNode";
+
+export {
+    TreeVisitor,
+    visit,
+} from "./lib/visitor";
