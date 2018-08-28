@@ -7,9 +7,22 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/atomist/tree-path-ts/compare/0.2.2...HEAD)
 
+### Changed
+
+-   Update to @atomist/microgrammar@1.0.0-M.1.
+-   Prepare for 1.0.0 release.
+
 ## [0.2.2](https://github.com/atomist/tree-path-ts/compare/0.2.1...0.2.2) - 2018-08-23
 
+### Added
+
+-   Add more exports to index.
+
 ## [0.2.1](https://github.com/atomist/tree-path-ts/compare/0.2.0...0.2.1) - 2018-08-22
+
+### Added
+
+-   Add more exports to index.
 
 ## [0.2.0](https://github.com/atomist/tree-path-ts/compare/0.1.9...0.2.0) - 2018-08-22
 

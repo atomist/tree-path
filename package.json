@@ -1,6 +1,6 @@
 {
   "name": "@atomist/tree-path",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Atomist path expression support",
   "author": {
     "name": "Atomist",
@@ -24,7 +24,7 @@
   "main": "./index.js",
   "types": "./index.d.ts",
   "dependencies": {
-    "@atomist/microgrammar": "^0.9.1",
+    "@atomist/microgrammar": "^1.0.0-M.1",
     "@types/lodash": "^4.14.116",
     "lodash": "^4.17.10"
   },
