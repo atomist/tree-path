@@ -1,8 +1,9 @@
 # @atomist/tree-path
 
+[![atomist sdm goals](http://badge.atomist.com/T29E48P34/atomist/tree-path-ts/ba33dd78-8d0e-41a3-9556-fca70a98289b)](https://app.atomist.com/workspace/T29E48P34)
 [![npm version](https://img.shields.io/npm/v/@atomist/tree-path.svg)](https://www.npmjs.com/package/@atomist/tree-path)
 
-[Node][node] module `@atomist/tree-path-ts` defining trees and path
+[Node.js][node] module `@atomist/tree-path-ts` defining trees and path
 expressions.  These capabilities were created for use in
 [Atomist][atomist] code transformations, including those used to
 transform seed projects into new projects.
@@ -21,7 +22,8 @@ TypeScript AST integration in [automation-client][]:
 ```typescript
 const variableNames = evaluateScalarValue(
 	sourceFile,
-	"//VariableDeclaration/Identifier");
+	"//VariableDeclaration/Identifier"
+);
 ```
 
 [microgrammars]: https://github.com/atomist/microgrammar (Atomist Microgrammar Node.js Package)
