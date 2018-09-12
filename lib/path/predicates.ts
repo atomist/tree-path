@@ -8,7 +8,12 @@ export class AttributeEqualityPredicate implements Predicate {
     }
 
     public evaluate(nodeToTest: TreeNode): boolean {
-        return nodeToTest.$value === this.value;
+        switch (this.name) {
+            case "value" :
+                return nodeToTest.$value === this.value;
+            default:
+                return nodeToTest[this.name] === this.value;
+        }
     }
 
     public toString() {
