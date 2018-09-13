@@ -32,6 +32,7 @@ export {
     evaluateScalar,
     evaluateScalarValue,
     evaluateScalarValues,
+    FunctionRegistry,
 } from "./lib/path/expressionEngine";
 
 export {
