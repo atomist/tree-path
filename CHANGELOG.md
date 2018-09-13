@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased](https://github.com/atomist/tree-path-ts/compare/1.0.0-M.1...HEAD)
 
+### Changed
+
+- Function registry is now an indexed type
+
 ## [1.0.0-M.1](https://github.com/atomist/tree-path-ts/compare/0.2.2...1.0.0-M.1) - 2018-08-28
 
 ### Changed

@@ -1,5 +1,5 @@
 import { TreeNode } from "../TreeNode";
-import { ExpressionEngine } from "./expressionEngine";
+import { ExpressionEngine, FunctionRegistry } from "./expressionEngine";
 import { toPathExpression } from "./utils";
 
 /**
@@ -57,7 +57,7 @@ export interface NodeTest {
 export type PredicateTest = (nodeToTest: TreeNode,
                              returnedNodes: TreeNode[],
                              ee: ExpressionEngine,
-                             functionRegistry: object) => boolean;
+                             functionRegistry: FunctionRegistry) => boolean;
 
 /**
  * Based on the XPath concept of a predicate. A predicate acts on a sequence of nodes
@@ -88,7 +88,10 @@ export class LocationStep {
                 public readonly predicates: Predicate[]) {
     }
 
-    public follow(tn: TreeNode, root: TreeNode, ee: ExpressionEngine, functionRegistry: object = {}): ExecutionResult {
+    public follow(tn: TreeNode,
+                  root: TreeNode,
+                  ee: ExpressionEngine,
+                  functionRegistry: FunctionRegistry): ExecutionResult {
         const allNodes = this.axis.follow(tn, root)
             .filter(n => this.test.test(n, ee));
         return allNodes.filter(n =>

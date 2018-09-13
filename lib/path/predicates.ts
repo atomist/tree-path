@@ -1,5 +1,5 @@
 import { TreeNode } from "../TreeNode";
-import { ExpressionEngine } from "./expressionEngine";
+import { ExpressionEngine, FunctionRegistry } from "./expressionEngine";
 import { isSuccessResult, PathExpression, Predicate, stringify } from "./pathExpression";
 
 export class AttributeEqualityPredicate implements Predicate {
@@ -22,7 +22,7 @@ export class AttributeEqualityPredicate implements Predicate {
 }
 
 /**
- * Position within results. Indexing starts from 1
+ * Position within results. Indexing starts from 1, following XPath spec
  */
 export class PositionPredicate implements Predicate {
 
@@ -44,7 +44,7 @@ export class NestedPathExpressionPredicate implements Predicate {
     }
 
     public evaluate(nodeToTest: TreeNode, returnedNodes: TreeNode[],
-                    ee: ExpressionEngine, functionRegistry: object): boolean {
+                    ee: ExpressionEngine, functionRegistry: FunctionRegistry): boolean {
         const r = ee(nodeToTest, this.pathExpression, functionRegistry);
         return isSuccessResult(r) && r.length > 0;
     }
@@ -62,7 +62,7 @@ export class OrPredicate implements Predicate {
     public evaluate(nodeToTest: TreeNode,
                     returnedNodes: TreeNode[],
                     ee: ExpressionEngine,
-                    functionRegistry: object): boolean {
+                    functionRegistry: FunctionRegistry): boolean {
         return this.a.evaluate(nodeToTest, returnedNodes, ee, functionRegistry) ||
             this.b.evaluate(nodeToTest, returnedNodes, ee, functionRegistry);
     }
