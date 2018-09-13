@@ -233,7 +233,7 @@ describe("expressionEngine", () => {
     });
 
     it("should evaluate scalarValues: by attribute", () => {
-        const thing1 = {$name: "Thing1", $value: "x", myAtt: "foo"};
+        const thing1 = {$name: "Thing1", $value: "xy", myAtt: "foo"};
         const thing2 = {$name: "Thing2", $value: "x"};
         const tn: TreeNode = {
             $name: "foo", $children: [
@@ -241,7 +241,7 @@ describe("expressionEngine", () => {
             ],
         };
         const result = evaluateScalarValue(tn, "/*[@myAtt='foo']");
-        assert.deepEqual(result, "x");
+        assert.deepEqual(result, "xy");
     });
 
     it("should evaluate scalar: > 1", () => {

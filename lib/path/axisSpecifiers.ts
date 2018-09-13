@@ -15,7 +15,6 @@ export const ChildAxisSpecifier: AxisSpecifier = {
 
 /**
  * Descendant, excluding self
- * @type {{type: string; follow(tn: TreeNode): TreeNode[]}}
  */
 export const DescendantAxisSpecifier: AxisSpecifier = {
 
