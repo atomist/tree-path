@@ -1,15 +1,26 @@
 
 import * as assert from "power-assert";
 import {
-    ChildAxisSpecifier, DescendantOrSelfAxisSpecifier,
-    FollowingSiblingAxisSpecifier, ParentAxisSpecifier, SelfAxisSpecifier,
+    ChildAxisSpecifier,
+    DescendantOrSelfAxisSpecifier,
+    FollowingSiblingAxisSpecifier,
+    ParentAxisSpecifier,
+    SelfAxisSpecifier,
 } from "../../lib/path/axisSpecifiers";
 import { FunctionPredicate } from "../../lib/path/FunctionPredicate";
-import { AllNodeTest, NamedNodeTest } from "../../lib/path/nodeTests";
-import { SimplePathExpression, UnionPathExpression } from "../../lib/path/pathExpression";
+import {
+    AllNodeTest,
+    NamedNodeTest,
+} from "../../lib/path/nodeTests";
+import {
+    SimplePathExpression,
+    UnionPathExpression,
+} from "../../lib/path/pathExpression";
 import { parsePathExpression } from "../../lib/path/pathExpressionParser";
 import {
-    AttributeEqualityPredicate, NestedPathExpressionPredicate, OrPredicate,
+    AttributeEqualityPredicate,
+    NestedPathExpressionPredicate,
+    OrPredicate,
     PositionPredicate,
 } from "../../lib/path/predicates";
 

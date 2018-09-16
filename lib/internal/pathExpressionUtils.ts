@@ -1,6 +1,11 @@
 import * as _ from "lodash";
 
-import { isUnionPathExpression, NodeTest, PathExpression, Predicate } from "../path/pathExpression";
+import {
+    isUnionPathExpression,
+    NodeTest,
+    PathExpression,
+    Predicate,
+} from "../path/pathExpression";
 
 export function allPredicates(pe: PathExpression): Predicate[] {
     return isUnionPathExpression(pe) ?

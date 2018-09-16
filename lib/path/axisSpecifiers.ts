@@ -1,6 +1,9 @@
 import * as _ from "lodash";
 
-import { parentOf, pathDownTo } from "../internal/treeUtils";
+import {
+    parentOf,
+    pathDownTo,
+} from "../internal/treeUtils";
 import { TreeNode } from "../TreeNode";
 import { AxisSpecifier } from "./pathExpression";
 

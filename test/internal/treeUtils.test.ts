@@ -1,7 +1,10 @@
 
 import * as assert from "power-assert";
 
-import { parentOf, pathDownTo } from "../../lib/internal/treeUtils";
+import {
+    parentOf,
+    pathDownTo,
+} from "../../lib/internal/treeUtils";
 import { TreeNode } from "../../lib/TreeNode";
 
 describe("treeUtils", () => {

@@ -1,12 +1,20 @@
 import { TreeNode } from "../TreeNode";
 import {
-    ExecutionResult, FailureResult, isFailureResult, isSuccessResult, isUnionPathExpression,
-    PathExpression, SuccessResult,
+    ExecutionResult,
+    FailureResult,
+    isFailureResult,
+    isSuccessResult,
+    isUnionPathExpression,
+    PathExpression,
+    SuccessResult,
 } from "./pathExpression";
 
 import * as _ from "lodash";
 import { allPredicates } from "../internal/pathExpressionUtils";
-import { FunctionPredicate, isFunctionPredicate } from "./FunctionPredicate";
+import {
+    FunctionPredicate,
+    isFunctionPredicate,
+} from "./FunctionPredicate";
 import { toPathExpression } from "./utils";
 
 /**

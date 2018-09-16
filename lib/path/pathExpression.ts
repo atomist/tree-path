@@ -1,5 +1,8 @@
 import { TreeNode } from "../TreeNode";
-import { ExpressionEngine, FunctionRegistry } from "./expressionEngine";
+import {
+    ExpressionEngine,
+    FunctionRegistry,
+} from "./expressionEngine";
 import { toPathExpression } from "./utils";
 
 /**

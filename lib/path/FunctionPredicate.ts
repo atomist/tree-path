@@ -1,7 +1,10 @@
 
 import { TreeNode } from "../TreeNode";
 import { ExpressionEngine } from "./expressionEngine";
-import { Predicate, PredicateTest } from "./pathExpression";
+import {
+    Predicate,
+    PredicateTest,
+} from "./pathExpression";
 
 /**
  * Predicate that executes a named predicate function, defined on the functionRegistry
