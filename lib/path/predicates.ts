@@ -1,6 +1,14 @@
 import { TreeNode } from "../TreeNode";
-import { ExpressionEngine, FunctionRegistry } from "./expressionEngine";
-import { isSuccessResult, PathExpression, Predicate, stringify } from "./pathExpression";
+import {
+    ExpressionEngine,
+    FunctionRegistry,
+} from "./expressionEngine";
+import {
+    isSuccessResult,
+    PathExpression,
+    Predicate,
+    stringify,
+} from "./pathExpression";
 
 export class AttributeEqualityPredicate implements Predicate {
 

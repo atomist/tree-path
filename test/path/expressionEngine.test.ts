@@ -1,17 +1,32 @@
 
 import * as assert from "power-assert";
 import {
-    ChildAxisSpecifier, DescendantAxisSpecifier,
-    DescendantOrSelfAxisSpecifier, SelfAxisSpecifier,
+    ChildAxisSpecifier,
+    DescendantAxisSpecifier,
+    DescendantOrSelfAxisSpecifier,
+    SelfAxisSpecifier,
 } from "../../lib/path/axisSpecifiers";
 import {
-    evaluateExpression, evaluateScalar, evaluateScalarValue,
+    evaluateExpression,
+    evaluateScalar,
+    evaluateScalarValue,
     evaluateScalarValues,
 } from "../../lib/path/expressionEngine";
-import { AllNodeTest, NamedNodeTest } from "../../lib/path/nodeTests";
-import { FailureResult, LocationStep, PathExpression, SuccessResult } from "../../lib/path/pathExpression";
+import {
+    AllNodeTest,
+    NamedNodeTest,
+} from "../../lib/path/nodeTests";
+import {
+    FailureResult,
+    LocationStep,
+    PathExpression,
+    SuccessResult,
+} from "../../lib/path/pathExpression";
 import { parsePathExpression } from "../../lib/path/pathExpressionParser";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate } from "../../lib/path/predicates";
+import {
+    AttributeEqualityPredicate,
+    NestedPathExpressionPredicate,
+} from "../../lib/path/predicates";
 import { TreeNode } from "../../lib/TreeNode";
 
 // tslint:disable:max-file-line-count

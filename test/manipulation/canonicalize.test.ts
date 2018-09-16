@@ -1,7 +1,10 @@
 import * as assert from "power-assert";
 import { stripPositionalInfo } from "../../lib/manipulation/canonicalize";
 import { TreeNode } from "../../lib/TreeNode";
-import { TreeVisitor, visit } from "../../lib/visitor";
+import {
+    TreeVisitor,
+    visit,
+} from "../../lib/visitor";
 
 describe("canonicalize", () => {
 

@@ -21,9 +21,20 @@ import {
     SelfAxisSpecifier,
 } from "./axisSpecifiers";
 import { FunctionPredicate } from "./FunctionPredicate";
-import { AllNodeTest, NamedNodeTest } from "./nodeTests";
-import { LocationStep, PathExpression, Predicate } from "./pathExpression";
-import { AttributeEqualityPredicate, NestedPathExpressionPredicate, PositionPredicate } from "./predicates";
+import {
+    AllNodeTest,
+    NamedNodeTest,
+} from "./nodeTests";
+import {
+    LocationStep,
+    PathExpression,
+    Predicate,
+} from "./pathExpression";
+import {
+    AttributeEqualityPredicate,
+    NestedPathExpressionPredicate,
+    PositionPredicate,
+} from "./predicates";
 
 /**
  * Parse the given string to path expression. Throw an error in the event of failure.
