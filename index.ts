@@ -67,3 +67,5 @@ export {
     TreeVisitor,
     visit,
 } from "./lib/visitor";
+
+export * from "./lib/manipulation/canonicalize";
