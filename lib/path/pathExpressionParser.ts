@@ -42,6 +42,7 @@ import {
  * @return {PathExpression}
  */
 export function parsePathExpression(expr: string): PathExpression {
+    checkForCommonErrors(expr);
     const pg = PredicateGrammarDefs as any;
     // TODO the _initialized property is being added to microgrammar LazyMatcher
     // to avoid the need for adding a property here
@@ -60,6 +61,12 @@ export function parsePathExpression(expr: string): PathExpression {
     } else {
         // logger.info("Error parsing path expression [%s]: %s", expr, JSON.stringify(m));
         throw new Error("Failure: " + JSON.stringify(m));
+    }
+}
+
+function checkForCommonErrors(expr: string): void {
+    if (expr.endsWith("/")) {
+        throw new Error("A path expression may not end with '/'. Try adding '*'");
     }
 }
 

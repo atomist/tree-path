@@ -30,7 +30,7 @@ describe("pathExpressionParser", () => {
         const expr = ".";
         const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
-        assert(parsed.locationSteps[0].axis ===  SelfAxisSpecifier);
+        assert(parsed.locationSteps[0].axis === SelfAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
     });
 
@@ -38,7 +38,7 @@ describe("pathExpressionParser", () => {
         const expr = "..";
         const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
-        assert(parsed.locationSteps[0].axis ===  ParentAxisSpecifier);
+        assert(parsed.locationSteps[0].axis === ParentAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
     });
 
@@ -46,7 +46,7 @@ describe("pathExpressionParser", () => {
         const expr = "/*";
         const parsed = parsePathExpression(expr) as SimplePathExpression;
         assert(parsed.locationSteps.length === 1);
-        assert(parsed.locationSteps[0].axis ===  ChildAxisSpecifier);
+        assert(parsed.locationSteps[0].axis === ChildAxisSpecifier);
         assert(parsed.locationSteps[0].test === AllNodeTest, JSON.stringify(parsed.locationSteps[0].test));
     });
 
@@ -241,4 +241,16 @@ describe("pathExpressionParser", () => {
         assert(second.locationSteps[0].axis === DescendantOrSelfAxisSpecifier);
     });
 
+});
+
+describe("Parse failures", () => {
+    it("Fails to parse //", async () => {
+        try {
+            parsePathExpression("//");
+            assert.fail();
+        } catch (err) {
+            assert.strictEqual(err.message,
+                "A path expression may not end with '/'. Try adding '*'");
+        }
+    });
 });
