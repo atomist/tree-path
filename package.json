@@ -8,13 +8,13 @@
     "url": "https://atomist.com/"
   },
   "license": "SEE LICENSE IN LICENSE",
-  "homepage": "https://github.com/atomist/tree-path-ts#readme",
+  "homepage": "https://github.com/atomist/tree-path#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/atomist/tree-path-ts.git"
+    "url": "git+https://github.com/atomist/tree-path.git"
   },
   "bugs": {
-    "url": "https://github.com/atomist/tree-path-ts/issues"
+    "url": "https://github.com/atomist/tree-path/issues"
   },
   "keywords": [
     "atomist",
