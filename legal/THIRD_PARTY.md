@@ -1,4 +1,4 @@
-# @atomist/tree-path
+# `@atomist/tree-path`
 
 This page details all runtime OSS dependencies of `@atomist/tree-path`.
 
