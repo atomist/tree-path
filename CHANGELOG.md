@@ -5,7 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased](https://github.com/atomist/tree-path-ts/compare/1.0.0-M.4...HEAD)
+## [Unreleased](https://github.com/atomist/tree-path-ts/compare/1.0.0-RC.2...HEAD)
+
+## [1.0.0-RC.2](https://github.com/atomist/tree-path-ts/compare/1.0.0-M.4...1.0.0-RC.2) - 2018-10-30
 
 ## [1.0.0-M.4](https://github.com/atomist/tree-path-ts/compare/1.0.0...1.0.0-M.4) - 2018-09-16
 
