@@ -26,11 +26,11 @@ import {
     NamedNodeTest,
 } from "./nodeTests";
 import {
+    AxisSpecifier,
     LocationStep,
+    NodeTest,
     PathExpression,
     Predicate,
-    AxisSpecifier,
-    NodeTest,
 } from "./pathExpression";
 import {
     AttributeEqualityPredicate,
