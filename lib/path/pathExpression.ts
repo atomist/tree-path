@@ -51,16 +51,16 @@ export interface NodeTest {
      * @return {SuccessResult}
      */
     test(tn: TreeNode,
-        ee: ExpressionEngine): boolean;
+         ee: ExpressionEngine): boolean;
 }
 
 /**
  * Signature of a predicate test.
  */
 export type PredicateTest = (nodeToTest: TreeNode,
-    returnedNodes: TreeNode[],
-    ee: ExpressionEngine,
-    functionRegistry: FunctionRegistry) => boolean;
+                             returnedNodes: TreeNode[],
+                             ee: ExpressionEngine,
+                             functionRegistry: FunctionRegistry) => boolean;
 
 /**
  * Based on the XPath concept of a predicate. A predicate acts on a sequence of nodes
@@ -87,14 +87,14 @@ export interface Predicate {
 export class LocationStep {
 
     constructor(public readonly axis: AxisSpecifier,
-        public readonly test: NodeTest,
-        public readonly predicates: Predicate[]) {
+                public readonly test: NodeTest,
+                public readonly predicates: Predicate[]) {
     }
 
     public follow(tn: TreeNode,
-        root: TreeNode,
-        ee: ExpressionEngine,
-        functionRegistry: FunctionRegistry): ExecutionResult {
+                  root: TreeNode,
+                  ee: ExpressionEngine,
+                  functionRegistry: FunctionRegistry): ExecutionResult {
         const allNodes = this.axis.follow(tn, root)
             .filter(n => this.test.test(n, ee));
         return allNodes.filter(n =>

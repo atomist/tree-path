@@ -112,11 +112,10 @@ const NodeTestGrammar = {
     test: ctx => ctx._it === "*" ? AllNodeTest : new NamedNodeTest(ctx._it),
 };
 
-
-export type LocationStepData = {
-    axis: AxisSpecifier,
-    test: NodeTest,
-    predicates: Predicate[]
+export interface LocationStepData {
+    axis: AxisSpecifier;
+    test: NodeTest;
+    predicates: Predicate[];
 }
 
 const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStepData>({
