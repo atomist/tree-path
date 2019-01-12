@@ -26,7 +26,9 @@ import {
     NamedNodeTest,
 } from "./nodeTests";
 import {
+    AxisSpecifier,
     LocationStep,
+    NodeTest,
     PathExpression,
     Predicate,
 } from "./pathExpression";
@@ -76,12 +78,12 @@ const NodeName = /[.a-zA-Z0-9_\-$#]+/;
 const ValuePredicateGrammar = Microgrammar.fromString<Predicate>(
     "@${name}='${value}'");
 
-const FunctionPredicateGrammar = Microgrammar.fromString<Predicate>(
+const FunctionPredicateGrammar = Microgrammar.fromString<{ functionName: string }>(
     "?${functionName}", {
         functionName: /[a-zA-Z_][a-zA-Z0-9_]*/,
     });
 
-const PositionPredicateGrammar = Microgrammar.fromString<Predicate>(
+const PositionPredicateGrammar = Microgrammar.fromString<{ position: number }>(
     "${position}", { position: Integer });
 
 const PredicateGrammarDefs = {
@@ -110,7 +112,13 @@ const NodeTestGrammar = {
     test: ctx => ctx._it === "*" ? AllNodeTest : new NamedNodeTest(ctx._it),
 };
 
-const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStep>({
+export interface LocationStepData {
+    axis: AxisSpecifier;
+    test: NodeTest;
+    predicates: Predicate[];
+}
+
+const LocationStepGrammar = Microgrammar.fromDefinitions<LocationStepData>({
     _axis: optional(firstOf("/", "..", ".",
         /[a-z\-]+::/)),
     axis: ctx => {
