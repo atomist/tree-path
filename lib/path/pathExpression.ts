@@ -44,6 +44,8 @@ export function isFailureResult(a: any): a is FailureResult {
  */
 export interface NodeTest {
 
+    kind: string;
+
     /**
      * Test nodes returned from navigating an AxisSpecifier.
      * @param {TreeNode} tn
